@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -77,5 +78,10 @@ public class ProdutoController {
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}		
+	}
+
+	@GetMapping("/substring")
+	public List<ProdutoSubstringProjection> buscaPorSubstring(@RequestParam(value = "substring") String substring) {
+		return cache.buscaPorSubstring(substring);
 	}
 }

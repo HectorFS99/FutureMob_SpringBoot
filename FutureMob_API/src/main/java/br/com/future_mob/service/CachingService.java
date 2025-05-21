@@ -13,27 +13,21 @@ import br.com.future_mob.repository.ProdutoRepository;
 
 @Service
 public class CachingService {
-
 	@Autowired
-	private MusicaRepository repM;
+	private ProdutoRepository rep;
 
-	@Cacheable(value = "TodasMusicasCacheable")
-	public List<Musica> findAll() {
-		return repM.findAll();
+	@Cacheable(value = "TodosProdutosCacheable")
+	public List<Produto> findAll() {
+		return rep.findAll();
 	}
 	
-	@Cacheable(value = "MusicasPorSubstring", 
-			key = "#substring")
-	public List<ProdutoSubstringProjection> 
-	buscaPorSubstring(String substring){
-		return repM.buscaPorSubstring(substring);
+	@Cacheable(value = "ProdutosPorSubstring", key = "#substring")
+	public List<ProdutoSubstringProjection> buscaPorSubstring(String substring){
+		return rep.buscaPorSubstring(substring);
 	}
 
-	@CacheEvict(value = { "TodasMusicasCacheable",
-			"MusicasPorSubstring"},
-			allEntries = true)
+	@CacheEvict(value = { "TodosProdutosCacheable", "ProdutosPorSubstring" }, allEntries = true)
 	public void removerCache() {
 		System.out.println("Removendo cache!");
 	}
-
 }

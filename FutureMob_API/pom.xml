@@ -8,11 +8,11 @@
 		<version>3.4.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.com.fatecmaua</groupId>
-	<artifactId>fatec-music</artifactId>
+	<groupId>br.com</groupId>
+	<artifactId>future-mob</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>fatec-music</name>
-	<description>Este é um projeto de gerenciamento de músicas, bandas e integrantes</description>
+	<name>future-mob</name>
+	<description>Este é um projeto para o gerenciamento de tudo que alimenta o FutureMob.</description>
 	<url/>
 	<licenses>
 		<license/>
