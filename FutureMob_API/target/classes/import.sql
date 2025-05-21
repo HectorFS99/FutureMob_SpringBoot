@@ -1,0 +1,10 @@
+insert into banda (nome, pais_origem,data_fundacao) values('Aviões do Forró','Brasil','2002-08-01');
+insert into banda (nome, pais_origem,data_fundacao) values('Banda Calypso','Brasil','2000-08-01');
+insert into banda (nome, pais_origem,data_fundacao) values('Cavaleiros do Forró','Brasil','1997-08-01');
+insert into banda (nome, pais_origem,data_fundacao) values('Adryana e a Rapaziada','Brasil','2005-08-01');
+insert into banda (nome, pais_origem,data_fundacao) values('Oasis','Brasil','2001-08-01');
+insert into musica (fk_banda,nome,genero,data_lancamento,duracao,internacional) values(1,'Risca Faca','Forró','2005-01-01',3.50,false);
+insert into musica (fk_banda,nome,genero,data_lancamento,duracao,internacional) values(2,'A Lua Me Traiu','Calipso','2002-01-01',5.50,false);
+insert into musica (fk_banda,nome,genero,data_lancamento,duracao,internacional) values(3,'A Praia','Forró','2007-01-01',7.33,false);
+insert into musica (fk_banda,nome,genero,data_lancamento,duracao,internacional) values(4,'Fim de Noite','Axé','2001-01-01',4.80,false);
+insert into musica (fk_banda,nome,genero,data_lancamento,duracao,internacional) values(5,'Don''t Look Back in Anger','Rock','1997-01-01',7.40,true);
