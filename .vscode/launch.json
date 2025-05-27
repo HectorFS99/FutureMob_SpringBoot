@@ -2,11 +2,11 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Spring Boot-FutureMobApplication<fatec-music>",
+            "name": "Spring Boot-FutureMobApplication<future-mob>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "mainClass": "br.com.future_mob.FutureMobApplication",
-            "projectName": "fatec-music",
+            "projectName": "future-mob",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }
