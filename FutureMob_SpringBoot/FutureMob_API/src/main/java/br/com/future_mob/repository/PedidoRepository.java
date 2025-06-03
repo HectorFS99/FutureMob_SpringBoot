@@ -8,6 +8,5 @@ import org.springframework.data.jpa.repository.Query;
 import br.com.future_mob.model.Pedido;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Integer>{	
-	@Query("FROM pedidos prod")
-	public List<Pedido> retornarTodos();
+
 }

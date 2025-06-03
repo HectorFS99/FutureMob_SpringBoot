@@ -8,6 +8,5 @@ import org.springframework.data.jpa.repository.Query;
 import br.com.future_mob.model.Produto;
 
 public interface ProdutoRepository extends JpaRepository<Produto, Integer>{	
-	@Query("FROM produtos prod")
-	public List<Produto> retornarTodos();
+
 }

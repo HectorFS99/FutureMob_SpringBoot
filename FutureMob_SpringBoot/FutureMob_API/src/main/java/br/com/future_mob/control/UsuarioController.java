@@ -29,8 +29,8 @@ public class UsuarioController {
 	private CachingService cache;
 	
 	@GetMapping(value = "/todos")
-	public List<Usuario> retornarTodos(){
-		return rep.retornarTodos();
+	public List<Usuario> retornarTodos() {
+		return rep.findAll();
 	}
 	
 	@GetMapping(value = "/{id}")
