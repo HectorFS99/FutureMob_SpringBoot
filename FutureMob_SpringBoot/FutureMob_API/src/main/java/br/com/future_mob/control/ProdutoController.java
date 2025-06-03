@@ -29,8 +29,8 @@ public class ProdutoController {
 	private CachingService cache;
 	
 	@GetMapping(value = "/todos")
-	public List<Produto> retornarTodos(){
-		return rep.retornarTodos();
+	public List<Produto> retornarTodos() {
+		return rep.findAll();
 	}
 	
 	@GetMapping(value = "/{id}")

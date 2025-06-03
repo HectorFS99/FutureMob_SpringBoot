@@ -29,8 +29,8 @@ public class CategoriaController {
 	private CachingService cache;
 	
 	@GetMapping(value = "/todos")
-	public List<Categoria> retornarTodos(){
-		return rep.retornarTodos();
+	public List<Categoria> retornarTodos() {
+		return rep.findAll();
 	}
 	
 	@GetMapping(value = "/{id}")

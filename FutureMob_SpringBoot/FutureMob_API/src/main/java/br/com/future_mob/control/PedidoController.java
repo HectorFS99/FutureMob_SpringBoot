@@ -27,8 +27,8 @@ public class PedidoController {
 	private CachingService cache;
 	
 	@GetMapping(value = "/todos")
-	public List<Pedido> retornarTodos(){
-		return rep.retornarTodos();
+	public List<Pedido> retornarTodos() {
+		return rep.findAll();
 	}
 	
 	@GetMapping(value = "/{id}")
