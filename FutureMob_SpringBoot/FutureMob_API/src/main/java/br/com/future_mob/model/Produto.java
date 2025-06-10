@@ -1,182 +1,212 @@
 package br.com.future_mob.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "produtos")
 public class Produto {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id_produto;
-	
-	private String nome;	
-	private String descricao;
-	private float preco_anterior;	
-	private float preco_atual;
-	private float altura;
-	private float largura;
-	private float profundidade;
-	private float peso;	
-	private boolean destaque;
-	private boolean oferta_relampago;
-	
-	@ManyToOne
-	@JoinColumn(name = "id_categoria")
-	private Categoria id_categoria;
-	
-	private String caminho_imagem;		
-	private boolean ativo;
 
-	public Produto() { }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_produto")
+    private Integer idProduto;
 
-	public Produto(
-		Integer id_produto
-		, String nome
+    @Column(name = "nome", nullable = false, length = 150)
+    private String nome;
+
+    @Column(name = "descricao", nullable = false, length = 500)
+    private String descricao;
+
+    @Column(name = "preco_anterior", nullable = false, precision = 10, scale = 2)
+    private BigDecimal precoAnterior;
+
+    @Column(name = "preco_atual", nullable = false, precision = 10, scale = 2)
+    private BigDecimal precoAtual;
+
+    @Column(name = "altura", nullable = false, precision = 5, scale = 2)
+    private BigDecimal altura;
+
+    @Column(name = "largura", nullable = false, precision = 5, scale = 2)
+    private BigDecimal largura;
+
+    @Column(name = "profundidade", nullable = false, precision = 5, scale = 2)
+    private BigDecimal profundidade;
+
+    @Column(name = "peso", nullable = false, precision = 6, scale = 2)
+    private BigDecimal peso;
+
+    @Column(name = "destaque", nullable = false)
+    private Boolean destaque;
+
+    @Column(name = "oferta_relampago", nullable = false)
+    private Boolean ofertaRelampago;
+
+    @ManyToOne
+    @JoinColumn(name = "id_categoria", nullable = false)
+    private Categoria categoria;
+
+    @Column(name = "caminho_imagem", length = 255)
+    private String caminhoImagem;
+
+    @Column(name = "ativo", nullable = false)
+    private Boolean ativo = true;
+
+    @Column(name = "dt_cadastro", nullable = false, updatable = false)
+    private LocalDateTime dataCadastro;
+
+    public Produto() {
+        this.dataCadastro = LocalDateTime.now();
+    }
+
+    public Produto(
+		String nome
 		, String descricao
-		, float preco_anterior
-		, float preco_atual
-		, float altura
-		, float largura
-		, float profundidade
-		, float peso
-		, boolean destaque
-		, boolean oferta_relampago
-		, Categoria id_categoria
-		, String caminho_imagem
-		, boolean ativo) {
-		super();
-		
-		this.id_produto = id_produto;
-		this.nome = nome;
-		this.descricao = descricao;
-		this.preco_anterior = preco_anterior;
-		this.preco_atual = preco_atual;
-		this.altura = altura;
-		this.largura = largura;
-		this.profundidade = profundidade;
-		this.peso = peso;
-		this.destaque = destaque;
-		this.oferta_relampago = oferta_relampago;
-		this.id_categoria = id_categoria;
-		this.caminho_imagem = caminho_imagem;
-		this.ativo = ativo;
-	}
+		, BigDecimal precoAnterior
+		, BigDecimal precoAtual
+		, BigDecimal altura
+		, BigDecimal largura
+		, BigDecimal profundidade
+		, BigDecimal peso
+		, Boolean destaque
+		, Boolean ofertaRelampago
+		, Categoria categoria
+		, String caminhoImagem) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.precoAnterior = precoAnterior;
+        this.precoAtual = precoAtual;
+        this.altura = altura;
+        this.largura = largura;
+        this.profundidade = profundidade;
+        this.peso = peso;
+        this.destaque = destaque;
+        this.ofertaRelampago = ofertaRelampago;
+        this.categoria = categoria;
+        this.caminhoImagem = caminhoImagem;
+        this.ativo = true;
+        this.dataCadastro = LocalDateTime.now();
+    }
 
-	public Integer getId_produto() {
-		return id_produto;
-	}
+    public Integer getIdProduto() {
+        return idProduto;
+    }
 
-	public void setId_produto(Integer id_produto) {
-		this.id_produto = id_produto;
-	}
+    public void setIdProduto(Integer idProduto) {
+        this.idProduto = idProduto;
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public String getDescricao() {
-		return descricao;
-	}
+    public String getDescricao() {
+        return descricao;
+    }
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
-	public float getPreco_anterior() {
-		return preco_anterior;
-	}
+    public BigDecimal getPrecoAnterior() {
+        return precoAnterior;
+    }
 
-	public void setPreco_anterior(float preco_anterior) {
-		this.preco_anterior = preco_anterior;
-	}
+    public void setPrecoAnterior(BigDecimal precoAnterior) {
+        this.precoAnterior = precoAnterior;
+    }
 
-	public float getPreco_atual() {
-		return preco_atual;
-	}
+    public BigDecimal getPrecoAtual() {
+        return precoAtual;
+    }
 
-	public void setPreco_atual(float preco_atual) {
-		this.preco_atual = preco_atual;
-	}
+    public void setPrecoAtual(BigDecimal precoAtual) {
+        this.precoAtual = precoAtual;
+    }
 
-	public float getAltura() {
-		return altura;
-	}
+    public BigDecimal getAltura() {
+        return altura;
+    }
 
-	public void setAltura(float altura) {
-		this.altura = altura;
-	}
+    public void setAltura(BigDecimal altura) {
+        this.altura = altura;
+    }
 
-	public float getLargura() {
-		return largura;
-	}
+    public BigDecimal getLargura() {
+        return largura;
+    }
 
-	public void setLargura(float largura) {
-		this.largura = largura;
-	}
+    public void setLargura(BigDecimal largura) {
+        this.largura = largura;
+    }
 
-	public float getProfundidade() {
-		return profundidade;
-	}
+    public BigDecimal getProfundidade() {
+        return profundidade;
+    }
 
-	public void setProfundidade(float profundidade) {
-		this.profundidade = profundidade;
-	}
+    public void setProfundidade(BigDecimal profundidade) {
+        this.profundidade = profundidade;
+    }
 
-	public float getPeso() {
-		return peso;
-	}
+    public BigDecimal getPeso() {
+        return peso;
+    }
 
-	public void setPeso(float peso) {
-		this.peso = peso;
-	}
+    public void setPeso(BigDecimal peso) {
+        this.peso = peso;
+    }
 
-	public boolean isDestaque() {
-		return destaque;
-	}
+    public Boolean getDestaque() {
+        return destaque;
+    }
 
-	public void setDestaque(boolean destaque) {
-		this.destaque = destaque;
-	}
+    public void setDestaque(Boolean destaque) {
+        this.destaque = destaque;
+    }
 
-	public boolean isOferta_relampago() {
-		return oferta_relampago;
-	}
+    public Boolean getOfertaRelampago() {
+        return ofertaRelampago;
+    }
 
-	public void setOferta_relampago(boolean oferta_relampago) {
-		this.oferta_relampago = oferta_relampago;
-	}
+    public void setOfertaRelampago(Boolean ofertaRelampago) {
+        this.ofertaRelampago = ofertaRelampago;
+    }
 
-	public Categoria getId_categoria() {
-		return id_categoria;
-	}
+    public Categoria getCategoria() {
+        return categoria;
+    }
 
-	public void setId_categoria(Categoria id_categoria) {
-		this.id_categoria = id_categoria;
-	}
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
 
-	public String getCaminho_imagem() {
-		return caminho_imagem;
-	}
+    public String getCaminhoImagem() {
+        return caminhoImagem;
+    }
 
-	public void setCaminho_imagem(String caminho_imagem) {
-		this.caminho_imagem = caminho_imagem;
-	}
+    public void setCaminhoImagem(String caminhoImagem) {
+        this.caminhoImagem = caminhoImagem;
+    }
 
-	public boolean isAtivo() {
-		return ativo;
-	}
+    public Boolean getAtivo() {
+        return ativo;
+    }
 
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
-	}	
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    public LocalDateTime getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(LocalDateTime dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
 }

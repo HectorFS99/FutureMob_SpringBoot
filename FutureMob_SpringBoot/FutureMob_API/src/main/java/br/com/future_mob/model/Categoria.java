@@ -1,66 +1,62 @@
 package br.com.future_mob.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "categorias")
 public class Categoria {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id_categoria;
-	
-	private String nome;
-	private String descricao;
-	private String caminho_icone;
 
-	public Categoria() { }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_categoria")
+    private Integer idCategoria;
 
-	public Categoria(
-		Integer id_categoria
-		, String nome
-		, String descricao
-		, String caminho_icone) {
-		super();
-		
-		this.id_categoria = id_categoria;
-		this.nome = nome;
-		this.descricao = descricao;
-		this.caminho_icone = caminho_icone;
-	}
+    @Column(name = "nome", nullable = false, length = 50)
+    private String nome;
 
-	public Integer getId_categoria() {
-		return id_categoria;
-	}
+    @Column(name = "descricao", nullable = false, length = 500)
+    private String descricao;
 
-	public void setId_categoria(Integer id_categoria) {
-		this.id_categoria = id_categoria;
-	}
+    @Column(name = "caminho_icone", length = 100)
+    private String caminhoIcone;
 
-	public String getNome() {
-		return nome;
-	}
+    public Categoria() { }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public Categoria(String nome, String descricao, String caminhoIcone) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.caminhoIcone = caminhoIcone;
+    }
 
-	public String getDescricao() {
-		return descricao;
-	}
+    public Integer getIdCategoria() {
+        return idCategoria;
+    }
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
+    public void setIdCategoria(Integer idCategoria) {
+        this.idCategoria = idCategoria;
+    }
 
-	public String getCaminho_icone() {
-		return caminho_icone;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public void setCaminho_icone(String caminho_icone) {
-		this.caminho_icone = caminho_icone;
-	}	
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getCaminhoIcone() {
+        return caminhoIcone;
+    }
+
+    public void setCaminhoIcone(String caminhoIcone) {
+        this.caminhoIcone = caminhoIcone;
+    }
 }

@@ -5,28 +5,17 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import br.com.future_mob.model.Produto;
 import br.com.future_mob.repository.ProdutoRepository;
-import br.com.future_mob.service.CachingService;
 
 @RestController
 @RequestMapping(value = "/produtos")
 public class ProdutoController {	
 	@Autowired
 	private ProdutoRepository rep;
-
-	@Autowired
-	private CachingService cache;
 	
 	@GetMapping(value = "/todos")
 	public List<Produto> retornarTodos() {
@@ -70,9 +59,10 @@ public class ProdutoController {
 		Optional<Produto> op = rep.findById(id);
 		
 		if(op.isPresent()) {
-			Produto Produto = op.get();
+			Produto obj = op.get();
 			rep.deleteById(id);
-			return Produto;
+			
+			return obj;
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}		

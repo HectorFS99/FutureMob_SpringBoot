@@ -7,20 +7,21 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import br.com.future_mob.model.Produto;
-import br.com.future_mob.repository.ProdutoRepository;
+import br.com.future_mob.model.*;
+import br.com.future_mob.repository.*;
 
 @Service
 public class CachingService {
 	@Autowired
-	private ProdutoRepository rep;
+	private CategoriaRepository catRep;
 
-	@Cacheable(value = "TodosProdutosCacheable")
-	public List<Produto> findAll() {
-		return rep.findAll();
+	@Cacheable(value = "TodasCategoriasCacheable")
+	public List<Categoria> retornarCategorias() {
+		return catRep.findAll();
 	}
 
-	@CacheEvict(value = { "TodosProdutosCacheable", "ProdutosPorSubstring" }, allEntries = true)
+	@CacheEvict(value = { "TodasCategoriasCacheable"
+		/* COLOCAR AQUI, SEPARADO POR VÍRGULA, VALORES DE CACHE A SEREM LIMPOS */ }, allEntries = true)
 	public void removerCache() {
 		System.out.println("Removendo cache!");
 	}

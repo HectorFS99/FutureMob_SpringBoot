@@ -1,178 +1,178 @@
 package br.com.future_mob.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "pedidos")
 public class Pedido {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pedido")
-    private int id_pedido;
+    private Integer idPedido;
 
-    private LocalDateTime dt_pedido;
+    @Column(name = "dt_pedido", nullable = false)
+    private LocalDateTime dataPedido = LocalDateTime.now();
 
-    private float subtotal;
-    private float frete;
-    private float descontos;
-    private float total;
+    @Column(name = "subtotal", precision = 10, scale = 2, nullable = false)
+    private BigDecimal subtotal;
+
+    @Column(name = "frete", precision = 5, scale = 2, nullable = false)
+    private BigDecimal frete;
+
+    @Column(name = "descontos", precision = 8, scale = 2, nullable = false)
+    private BigDecimal descontos;
+
+    @Column(name = "total", precision = 10, scale = 2, nullable = false)
+    private BigDecimal total;
 
     @ManyToOne
     @JoinColumn(name = "id_pagamento")
-    private Pagamento id_pagamento;
+    private Pagamento pagamento;
 
     @ManyToOne
     @JoinColumn(name = "id_endereco")
-    private Endereco id_endereco;
+    private Endereco endereco;
 
     @ManyToOne
     @JoinColumn(name = "id_loja")
-    private Loja id_loja;
+    private Loja loja;
 
     @ManyToOne
-    @JoinColumn(name = "id_status")
-    private Status id_status;
+    @JoinColumn(name = "id_status", nullable = false)
+    private Status status;
 
     @Column(name = "dt_entrega")
-    private LocalDate dt_entrega;
+    private LocalDate dataEntrega;
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario")
-    private Usuario id_usuario;
+    @JoinColumn(name = "id_usuario", nullable = false)
+    private Usuario usuario;
 
     public Pedido() { }
 
     public Pedido(
-        int id_pedido
-        , LocalDateTime dt_pedido
-        , float subtotal
-        , float frete
-        , float descontos
-        , float total
-        , Pagamento id_pagamento
-        , Endereco id_endereco
-        , Loja id_loja
-        , Status id_status
-        , LocalDate dt_entrega
-        , Usuario id_usuario
-    ) {
-        this.id_pedido = id_pedido;
-        this.dt_pedido = dt_pedido;
+        LocalDateTime dataPedido
+        , BigDecimal subtotal
+        , BigDecimal frete
+        , BigDecimal descontos
+        , BigDecimal total
+        , Pagamento pagamento
+        , Endereco endereco
+        , Loja loja
+        , Status status
+        , LocalDate dataEntrega
+        , Usuario usuario) {
+        this.dataPedido = dataPedido != null ? dataPedido : LocalDateTime.now();
         this.subtotal = subtotal;
         this.frete = frete;
         this.descontos = descontos;
         this.total = total;
-        this.id_pagamento = id_pagamento;
-        this.id_endereco = id_endereco;
-        this.id_loja = id_loja;
-        this.id_status = id_status;
-        this.dt_entrega = dt_entrega;
-        this.id_usuario = id_usuario;
+        this.pagamento = pagamento;
+        this.endereco = endereco;
+        this.loja = loja;
+        this.status = status;
+        this.dataEntrega = dataEntrega;
+        this.usuario = usuario;
     }
 
-    public int getId_pedido() {
-        return id_pedido;
+    public Integer getIdPedido() {
+        return idPedido;
     }
 
-    public void setId_pedido(int id_pedido) {
-        this.id_pedido = id_pedido;
+    public void setIdPedido(Integer idPedido) {
+        this.idPedido = idPedido;
     }
 
-    public LocalDateTime getDt_pedido() {
-        return dt_pedido;
+    public LocalDateTime getDataPedido() {
+        return dataPedido;
     }
 
-    public void setDt_pedido(LocalDateTime dt_pedido) {
-        this.dt_pedido = dt_pedido;
+    public void setDataPedido(LocalDateTime dataPedido) {
+        this.dataPedido = dataPedido;
     }
 
-    public float getSubtotal() {
+    public BigDecimal getSubtotal() {
         return subtotal;
     }
 
-    public void setSubtotal(float subtotal) {
+    public void setSubtotal(BigDecimal subtotal) {
         this.subtotal = subtotal;
     }
 
-    public float getFrete() {
+    public BigDecimal getFrete() {
         return frete;
     }
 
-    public void setFrete(float frete) {
+    public void setFrete(BigDecimal frete) {
         this.frete = frete;
     }
 
-    public float getDescontos() {
+    public BigDecimal getDescontos() {
         return descontos;
     }
 
-    public void setDescontos(float descontos) {
+    public void setDescontos(BigDecimal descontos) {
         this.descontos = descontos;
     }
 
-    public float getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(float total) {
+    public void setTotal(BigDecimal total) {
         this.total = total;
     }
 
-    public Pagamento getId_pagamento() {
-        return id_pagamento;
+    public Pagamento getPagamento() {
+        return pagamento;
     }
 
-    public void setId_pagamento(Pagamento id_pagamento) {
-        this.id_pagamento = id_pagamento;
+    public void setPagamento(Pagamento pagamento) {
+        this.pagamento = pagamento;
     }
 
-    public Endereco getId_endereco() {
-        return id_endereco;
+    public Endereco getEndereco() {
+        return endereco;
     }
 
-    public void setId_endereco(Endereco id_endereco) {
-        this.id_endereco = id_endereco;
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
-    public Loja getId_loja() {
-        return id_loja;
+    public Loja getLoja() {
+        return loja;
     }
 
-    public void setId_loja(Loja id_loja) {
-        this.id_loja = id_loja;
+    public void setLoja(Loja loja) {
+        this.loja = loja;
     }
 
-    public Status getId_status() {
-        return id_status;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setId_status(Status id_status) {
-        this.id_status = id_status;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
-    public LocalDate getDt_entrega() {
-        return dt_entrega;
+    public LocalDate getDataEntrega() {
+        return dataEntrega;
     }
 
-    public void setDt_entrega(LocalDate dt_entrega) {
-        this.dt_entrega = dt_entrega;
+    public void setDataEntrega(LocalDate dataEntrega) {
+        this.dataEntrega = dataEntrega;
     }
 
-    public Usuario getId_usuario() {
-        return id_usuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setId_usuario(Usuario id_usuario) {
-        this.id_usuario = id_usuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

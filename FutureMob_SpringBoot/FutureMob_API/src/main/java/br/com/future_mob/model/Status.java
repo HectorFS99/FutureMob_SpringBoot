@@ -1,42 +1,35 @@
 package br.com.future_mob.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "status")
 public class Status {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_status")
-    private byte id_status;
+    private Byte idStatus;
 
+    @Column(name = "nome", length = 25, nullable = false)
     private String nome;
 
+    @Column(name = "descricao", length = 100)
     private String descricao;
 
     public Status() { }
 
-    public Status(
-        byte id_status,
-        String nome,
-        String descricao
-    ) {
-        this.id_status = id_status;
+    public Status(String nome, String descricao) {
         this.nome = nome;
         this.descricao = descricao;
     }
 
-    public byte getId_status() {
-        return id_status;
+    public Byte getIdStatus() {
+        return idStatus;
     }
 
-    public void setId_status(byte id_status) {
-        this.id_status = id_status;
+    public void setIdStatus(Byte idStatus) {
+        this.idStatus = idStatus;
     }
 
     public String getNome() {

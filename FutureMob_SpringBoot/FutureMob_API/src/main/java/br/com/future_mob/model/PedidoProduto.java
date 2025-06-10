@@ -1,59 +1,65 @@
 package br.com.future_mob.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "pedidos_produtos")
 public class PedidoProduto {
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "id_pedido")
-    private Pedido id_pedido;
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "id_produto")
-    private Produto id_produto;
+    @EmbeddedId
+    private PedidoProdutoId id = new PedidoProdutoId();
 
-    private int quantidade;
+    @ManyToOne
+    @MapsId("idPedido")
+    @JoinColumn(name = "id_pedido", nullable = false)
+    private Pedido pedido;
+
+    @ManyToOne
+    @MapsId("idProduto")
+    @JoinColumn(name = "id_produto", nullable = false)
+    private Produto produto;
+
+    @Column(name = "quantidade", nullable = false)
+    private Integer quantidade;
 
     public PedidoProduto() { }
 
-    public PedidoProduto(
-        Pedido id_pedido
-        , Produto id_produto
-        , int quantidade
-    ) {
-        this.id_pedido = id_pedido;
-        this.id_produto = id_produto;
+    public PedidoProduto(Pedido pedido, Produto produto, Integer quantidade) {
+        this.pedido = pedido;
+        this.produto = produto;
         this.quantidade = quantidade;
+        this.id = new PedidoProdutoId(pedido.getIdPedido(), produto.getIdProduto());
     }
 
-    public Pedido getId_pedido() {
-        return id_pedido;
+    public PedidoProdutoId getId() {
+        return id;
     }
 
-    public void setId_pedido(Pedido id_pedido) {
-        this.id_pedido = id_pedido;
+    public void setId(PedidoProdutoId id) {
+        this.id = id;
     }
 
-    public Produto getId_produto() {
-        return id_produto;
+    public Pedido getPedido() {
+        return pedido;
     }
 
-    public void setId_produto(Produto id_produto) {
-        this.id_produto = id_produto;
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
 
-    public int getQuantidade() {
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
+
+    public Integer getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(int quantidade) {
+    public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
 }

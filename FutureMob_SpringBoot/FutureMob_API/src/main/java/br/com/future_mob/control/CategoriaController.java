@@ -5,14 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import br.com.future_mob.model.Categoria;
@@ -26,11 +19,11 @@ public class CategoriaController {
 	private CategoriaRepository rep;
 
 	@Autowired
-	private CachingService cache;
+	private CachingService cacheService;
 	
 	@GetMapping(value = "/todos")
 	public List<Categoria> retornarTodos() {
-		return rep.findAll();
+		return cacheService.retornarCategorias();
 	}
 	
 	@GetMapping(value = "/{id}")
@@ -70,9 +63,10 @@ public class CategoriaController {
 		Optional<Categoria> op = rep.findById(id);
 		
 		if(op.isPresent()) {
-			Categoria Categoria = op.get();
+			Categoria obj = op.get();
 			rep.deleteById(id);
-			return Categoria;
+			
+			return obj;
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}		

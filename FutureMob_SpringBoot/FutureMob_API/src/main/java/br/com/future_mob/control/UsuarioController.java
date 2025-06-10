@@ -5,35 +5,32 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import br.com.future_mob.model.Usuario;
 import br.com.future_mob.repository.UsuarioRepository;
-import br.com.future_mob.service.CachingService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping(value = "/Usuarios")
+@Tag(name = "Usuários", description = "Operações relacionadas a usuários")
 public class UsuarioController {	
 	@Autowired
 	private UsuarioRepository rep;
-
-	@Autowired
-	private CachingService cache;
 	
 	@GetMapping(value = "/todos")
 	public List<Usuario> retornarTodos() {
 		return rep.findAll();
 	}
 	
-	@GetMapping(value = "/{id}")
+    @GetMapping("/{id}")
+    @Operation(summary = "Buscar usuário por ID", 
+               description = "Retorna um usuário com base no ID fornecido")
+    @ApiResponse(responseCode = "200", description = "Usuário encontrado")
+    @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
 	public Usuario retornarPorID(@PathVariable Integer id) {
 		Optional<Usuario> op =  rep.findById(id);
 		
@@ -70,9 +67,10 @@ public class UsuarioController {
 		Optional<Usuario> op = rep.findById(id);
 		
 		if(op.isPresent()) {
-			Usuario Usuario = op.get();
+			Usuario obj = op.get();
 			rep.deleteById(id);
-			return Usuario;
+			
+			return obj;
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}		

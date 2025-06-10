@@ -1,45 +1,56 @@
 package br.com.future_mob.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
-
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "enderecos")
 public class Endereco {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_endereco")
-    private int id_endereco;
+    private Integer idEndereco;
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario")
-    private Usuario id_usuario;
+    @JoinColumn(name = "id_usuario", nullable = false)
+    private Usuario usuario;
 
-    private String nome_endereco;
+    @Column(name = "nome_endereco", length = 30, nullable = false)
+    private String nomeEndereco;
+
+    @Column(name = "cep", length = 8, nullable = false)
     private String cep;
+
+    @Column(name = "logradouro", length = 50, nullable = false)
     private String logradouro;
+
+    @Column(name = "numero", length = 7, nullable = false)
     private String numero;
+
+    @Column(name = "complemento", length = 30)
     private String complemento;
+
+    @Column(name = "bairro", length = 30, nullable = false)
     private String bairro;
+
+    @Column(name = "cidade", length = 60, nullable = false)
     private String cidade;
+
+    @Column(name = "uf", length = 2, nullable = false)
     private String uf;
-    private LocalDateTime dt_cadastro;
-    private boolean principal;
+
+    @Column(name = "dt_cadastro", nullable = false)
+    private LocalDateTime dataCadastro = LocalDateTime.now();
+
+    @Column(name = "principal", nullable = false)
+    private Boolean principal;
 
     public Endereco() { }
 
     public Endereco(
-        int id_endereco
-        , Usuario id_usuario
-        , String nome_endereco
+        Usuario usuario
+        , String nomeEndereco
         , String cep
         , String logradouro
         , String numero
@@ -47,12 +58,10 @@ public class Endereco {
         , String bairro
         , String cidade
         , String uf
-        , LocalDateTime dt_cadastro
-        , boolean principal
-    ) {
-        this.id_endereco = id_endereco;
-        this.id_usuario = id_usuario;
-        this.nome_endereco = nome_endereco;
+        , LocalDateTime dataCadastro
+        , Boolean principal) {
+        this.usuario = usuario;
+        this.nomeEndereco = nomeEndereco;
         this.cep = cep;
         this.logradouro = logradouro;
         this.numero = numero;
@@ -60,32 +69,32 @@ public class Endereco {
         this.bairro = bairro;
         this.cidade = cidade;
         this.uf = uf;
-        this.dt_cadastro = dt_cadastro;
+        this.dataCadastro = dataCadastro != null ? dataCadastro : LocalDateTime.now();
         this.principal = principal;
     }
 
-    public int getId_endereco() {
-        return id_endereco;
+    public Integer getIdEndereco() {
+        return idEndereco;
     }
 
-    public void setId_endereco(int id_endereco) {
-        this.id_endereco = id_endereco;
+    public void setIdEndereco(Integer idEndereco) {
+        this.idEndereco = idEndereco;
     }
 
-    public Usuario getId_usuario() {
-        return id_usuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setId_usuario(Usuario id_usuario) {
-        this.id_usuario = id_usuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public String getNome_endereco() {
-        return nome_endereco;
+    public String getNomeEndereco() {
+        return nomeEndereco;
     }
 
-    public void setNome_endereco(String nome_endereco) {
-        this.nome_endereco = nome_endereco;
+    public void setNomeEndereco(String nomeEndereco) {
+        this.nomeEndereco = nomeEndereco;
     }
 
     public String getCep() {
@@ -144,19 +153,19 @@ public class Endereco {
         this.uf = uf;
     }
 
-    public LocalDateTime getDt_cadastro() {
-        return dt_cadastro;
+    public LocalDateTime getDataCadastro() {
+        return dataCadastro;
     }
 
-    public void setDt_cadastro(LocalDateTime dt_cadastro) {
-        this.dt_cadastro = dt_cadastro;
+    public void setDataCadastro(LocalDateTime dataCadastro) {
+        this.dataCadastro = dataCadastro;
     }
 
-    public boolean isPrincipal() {
+    public Boolean getPrincipal() {
         return principal;
     }
 
-    public void setPrincipal(boolean principal) {
+    public void setPrincipal(Boolean principal) {
         this.principal = principal;
     }
 }

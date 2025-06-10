@@ -1,42 +1,35 @@
 package br.com.future_mob.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "lojas")
 public class Loja {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_loja")
-    private short id_loja;
+    private Short idLoja;
 
+    @Column(name = "nome", length = 50, nullable = false)
     private String nome;
 
-    private String endereco_completo;
+    @Column(name = "endereco_completo", length = 100, nullable = false)
+    private String enderecoCompleto;
 
     public Loja() { }
 
-    public Loja(
-        short id_loja
-        , String nome
-        , String endereco_completo
-    ) {
-        this.id_loja = id_loja;
+    public Loja(String nome, String enderecoCompleto) {
         this.nome = nome;
-        this.endereco_completo = endereco_completo;
+        this.enderecoCompleto = enderecoCompleto;
     }
 
-    public short getId_loja() {
-        return id_loja;
+    public Short getIdLoja() {
+        return idLoja;
     }
 
-    public void setId_loja(short id_loja) {
-        this.id_loja = id_loja;
+    public void setIdLoja(Short idLoja) {
+        this.idLoja = idLoja;
     }
 
     public String getNome() {
@@ -47,11 +40,11 @@ public class Loja {
         this.nome = nome;
     }
 
-    public String getEndereco_completo() {
-        return endereco_completo;
+    public String getEnderecoCompleto() {
+        return enderecoCompleto;
     }
 
-    public void setEndereco_completo(String endereco_completo) {
-        this.endereco_completo = endereco_completo;
+    public void setEnderecoCompleto(String enderecoCompleto) {
+        this.enderecoCompleto = enderecoCompleto;
     }
 }

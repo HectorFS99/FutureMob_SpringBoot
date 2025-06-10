@@ -1,72 +1,86 @@
 package br.com.future_mob.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "usuarios", uniqueConstraints = { 
+    @UniqueConstraint(columnNames = "cpf", name = "UQ_CPF"),
+    @UniqueConstraint(columnNames = "email", name = "UQ_email")
+})
 public class Usuario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_usuario;
-    
-    private String nome_completo;    
+    @Column(name = "id_usuario")
+    private Integer idUsuario;
+
+    @Column(name = "nome_completo", nullable = false, length = 80)
+    private String nomeCompleto;
+
+    @Column(name = "cpf", nullable = false, length = 11, unique = true)
     private String cpf;
+
+    @Column(name = "rg", nullable = false, length = 9)
     private String rg;
-    private LocalDate dt_nascimento;
+
+    @Column(name = "dt_nascimento", nullable = false)
+    private LocalDate dataNascimento;
+
+    @Column(name = "sexo", nullable = false, length = 1)
     private String sexo;
-    private String telefone_celular;
+
+    @Column(name = "telefone_celular", nullable = false, length = 15)
+    private String telefoneCelular;
+
+    @Column(name = "email", nullable = false, length = 80, unique = true)
     private String email;
+
+    @Column(name = "senha", nullable = false, length = 255)
     private String senha;
-    private boolean admin;
-    private String caminho_img_perfil;
+
+    @Column(name = "admin", nullable = false)
+    private Boolean admin = false;
+
+    @Column(name = "caminho_img_perfil", length = 200)
+    private String caminhoImgPerfil;
 
     public Usuario() { }
 
     public Usuario(
-        Integer id_usuario
-        , String nome_completo
+        String nomeCompleto
         , String cpf
         , String rg
-        , LocalDate dt_nascimento
+        , LocalDate dataNascimento
         , String sexo
-        , String telefone_celular
+        , String telefoneCelular
         , String email
-        , String senha
-        , boolean admin
-        , String caminho_img_perfil
-    ) {
-        this.id_usuario = id_usuario;
-        this.nome_completo = nome_completo;
+        , String senha) {
+        this.nomeCompleto = nomeCompleto;
         this.cpf = cpf;
         this.rg = rg;
-        this.dt_nascimento = dt_nascimento;
+        this.dataNascimento = dataNascimento;
         this.sexo = sexo;
-        this.telefone_celular = telefone_celular;
+        this.telefoneCelular = telefoneCelular;
         this.email = email;
         this.senha = senha;
-        this.admin = admin;
-        this.caminho_img_perfil = caminho_img_perfil;
+        this.admin = false;
     }
 
-    public Integer getId_usuario() {
-        return id_usuario;
+    public Integer getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setId_usuario(Integer id_usuario) {
-        this.id_usuario = id_usuario;
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
-    public String getNome_completo() {
-        return nome_completo;
+    public String getNomeCompleto() {
+        return nomeCompleto;
     }
 
-    public void setNome_completo(String nome_completo) {
-        this.nome_completo = nome_completo;
+    public void setNomeCompleto(String nomeCompleto) {
+        this.nomeCompleto = nomeCompleto;
     }
 
     public String getCpf() {
@@ -85,12 +99,12 @@ public class Usuario {
         this.rg = rg;
     }
 
-    public LocalDate getDt_nascimento() {
-        return dt_nascimento;
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
     }
 
-    public void setDt_nascimento(LocalDate dt_nascimento) {
-        this.dt_nascimento = dt_nascimento;
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
     public String getSexo() {
@@ -101,12 +115,12 @@ public class Usuario {
         this.sexo = sexo;
     }
 
-    public String getTelefone_celular() {
-        return telefone_celular;
+    public String getTelefoneCelular() {
+        return telefoneCelular;
     }
 
-    public void setTelefone_celular(String telefone_celular) {
-        this.telefone_celular = telefone_celular;
+    public void setTelefoneCelular(String telefoneCelular) {
+        this.telefoneCelular = telefoneCelular;
     }
 
     public String getEmail() {
@@ -125,19 +139,19 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public boolean isAdmin() {
+    public Boolean getAdmin() {
         return admin;
     }
 
-    public void setAdmin(boolean admin) {
+    public void setAdmin(Boolean admin) {
         this.admin = admin;
     }
 
-    public String getCaminho_img_perfil() {
-        return caminho_img_perfil;
+    public String getCaminhoImgPerfil() {
+        return caminhoImgPerfil;
     }
 
-    public void setCaminho_img_perfil(String caminho_img_perfil) {
-        this.caminho_img_perfil = caminho_img_perfil;
+    public void setCaminhoImgPerfil(String caminhoImgPerfil) {
+        this.caminhoImgPerfil = caminhoImgPerfil;
     }
 }

@@ -1,115 +1,126 @@
 package br.com.future_mob.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.*;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "cartoes_pagamento")
 public class CartaoPagamento {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cartao_pagamento")
-    private int id_cartao_pagamento;
+    private Integer idCartaoPagamento;
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario")
-    private Usuario id_usuario;
+    @JoinColumn(name = "id_usuario", nullable = false)
+    private Usuario usuario;
 
-    private String numero_cartao;
-    private String nome_impresso;
-    private String dt_expiracao;
-    private int codigo_seguranca;
+    @Column(name = "numero_cartao", length = 16, nullable = false)
+    private String numeroCartao;
+
+    @Column(name = "nome_impresso", length = 20, nullable = false)
+    private String nomeImpresso;
+
+    @Column(name = "dt_expiracao", nullable = false)
+    private String dataExpiracao;
+
+    @Column(name = "codigo_seguranca", nullable = false)
+    private Integer codigoSeguranca;
+
+    @Column(name = "bandeira", length = 20, nullable = false)
     private String bandeira;
-    private LocalDateTime dt_cadastro;
+
+    @Column(name = "dt_cadastro", nullable = false)
+    private LocalDateTime dataCadastro = LocalDateTime.now();
+
+    @Column(name = "apelido", length = 30)
     private String apelido;
-    private boolean credito;
-    private boolean debito;
-    private boolean principal;
+
+    @Column(name = "credito", nullable = false)
+    private Boolean credito = false;
+
+    @Column(name = "debito", nullable = false)
+    private Boolean debito = false;
+
+    @Column(name = "principal", nullable = false)
+    private Boolean principal;
 
     public CartaoPagamento() { }
 
     public CartaoPagamento(
-        int id_cartao_pagamento
-        , Usuario id_usuario
-        , String numero_cartao
-        , String nome_impresso
-        , String dt_expiracao
-        , int codigo_seguranca
+        Usuario usuario
+        , String numeroCartao
+        , String nomeImpresso
+        , String dataExpiracao
+        , Integer codigoSeguranca
         , String bandeira
-        , LocalDateTime dt_cadastro
+        , LocalDateTime dataCadastro
         , String apelido
-        , boolean credito
-        , boolean debito
-        , boolean principal
-    ) {
-        this.id_cartao_pagamento = id_cartao_pagamento;
-        this.id_usuario = id_usuario;
-        this.numero_cartao = numero_cartao;
-        this.nome_impresso = nome_impresso;
-        this.dt_expiracao = dt_expiracao;
-        this.codigo_seguranca = codigo_seguranca;
+        , Boolean credito
+        , Boolean debito
+        , Boolean principal) {
+        this.usuario = usuario;
+        this.numeroCartao = numeroCartao;
+        this.nomeImpresso = nomeImpresso;
+        this.dataExpiracao = dataExpiracao;
+        this.codigoSeguranca = codigoSeguranca;
         this.bandeira = bandeira;
-        this.dt_cadastro = dt_cadastro;
+        this.dataCadastro = dataCadastro != null ? dataCadastro : LocalDateTime.now();
         this.apelido = apelido;
-        this.credito = credito;
-        this.debito = debito;
+        this.credito = credito != null ? credito : false;
+        this.debito = debito != null ? debito : false;
         this.principal = principal;
     }
 
-    public int getId_cartao_pagamento() {
-        return id_cartao_pagamento;
+    public Integer getIdCartaoPagamento() {
+        return idCartaoPagamento;
     }
 
-    public void setId_cartao_pagamento(int id_cartao_pagamento) {
-        this.id_cartao_pagamento = id_cartao_pagamento;
+    public void setIdCartaoPagamento(Integer idCartaoPagamento) {
+        this.idCartaoPagamento = idCartaoPagamento;
     }
 
-    public Usuario getId_usuario() {
-        return id_usuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setId_usuario(Usuario id_usuario) {
-        this.id_usuario = id_usuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public String getNumero_cartao() {
-        return numero_cartao;
+    public String getNumeroCartao() {
+        return numeroCartao;
     }
 
-    public void setNumero_cartao(String numero_cartao) {
-        this.numero_cartao = numero_cartao;
+    public void setNumeroCartao(String numeroCartao) {
+        this.numeroCartao = numeroCartao;
     }
 
-    public String getNome_impresso() {
-        return nome_impresso;
+    public String getNomeImpresso() {
+        return nomeImpresso;
     }
 
-    public void setNome_impresso(String nome_impresso) {
-        this.nome_impresso = nome_impresso;
+    public void setNomeImpresso(String nomeImpresso) {
+        this.nomeImpresso = nomeImpresso;
     }
 
-    public String getDt_expiracao() {
-        return dt_expiracao;
+    public String getDataExpiracao() {
+        return dataExpiracao;
     }
 
-    public void setDt_expiracao(String dt_expiracao) {
-        this.dt_expiracao = dt_expiracao;
+    public void setDataExpiracao(String dataExpiracao) {
+        this.dataExpiracao = dataExpiracao;
     }
 
-    public int getCodigo_seguranca() {
-        return codigo_seguranca;
+    public Integer getCodigoSeguranca() {
+        return codigoSeguranca;
     }
 
-    public void setCodigo_seguranca(int codigo_seguranca) {
-        this.codigo_seguranca = codigo_seguranca;
+    public void setCodigoSeguranca(Integer codigoSeguranca) {
+        this.codigoSeguranca = codigoSeguranca;
     }
 
     public String getBandeira() {
@@ -120,12 +131,12 @@ public class CartaoPagamento {
         this.bandeira = bandeira;
     }
 
-    public LocalDateTime getDt_cadastro() {
-        return dt_cadastro;
+    public LocalDateTime getDataCadastro() {
+        return dataCadastro;
     }
 
-    public void setDt_cadastro(LocalDateTime dt_cadastro) {
-        this.dt_cadastro = dt_cadastro;
+    public void setDataCadastro(LocalDateTime dataCadastro) {
+        this.dataCadastro = dataCadastro;
     }
 
     public String getApelido() {
@@ -136,27 +147,27 @@ public class CartaoPagamento {
         this.apelido = apelido;
     }
 
-    public boolean isCredito() {
+    public Boolean getCredito() {
         return credito;
     }
 
-    public void setCredito(boolean credito) {
+    public void setCredito(Boolean credito) {
         this.credito = credito;
     }
 
-    public boolean isDebito() {
+    public Boolean getDebito() {
         return debito;
     }
 
-    public void setDebito(boolean debito) {
+    public void setDebito(Boolean debito) {
         this.debito = debito;
     }
 
-    public boolean isPrincipal() {
+    public Boolean getPrincipal() {
         return principal;
     }
 
-    public void setPrincipal(boolean principal) {
+    public void setPrincipal(Boolean principal) {
         this.principal = principal;
     }
 }
