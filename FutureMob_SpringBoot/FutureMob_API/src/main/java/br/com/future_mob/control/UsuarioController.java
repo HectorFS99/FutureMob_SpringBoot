@@ -13,7 +13,7 @@ import br.com.future_mob.repository.UsuarioRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/Usuarios")
 @Tag(name = "Usuários", description = "Operações relacionadas a usuários")

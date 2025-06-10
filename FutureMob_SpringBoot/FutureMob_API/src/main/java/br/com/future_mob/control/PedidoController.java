@@ -10,7 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.future_mob.model.Pedido;
 import br.com.future_mob.repository.PedidoRepository;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/pedidos")
 public class PedidoController {	
