@@ -10,7 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.future_mob.model.Produto;
 import br.com.future_mob.repository.ProdutoRepository;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/produtos")
 public class ProdutoController {	
