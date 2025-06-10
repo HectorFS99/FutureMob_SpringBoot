@@ -11,7 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import br.com.future_mob.model.Categoria;
 import br.com.future_mob.repository.CategoriaRepository;
 import br.com.future_mob.service.CachingService;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaController {	
