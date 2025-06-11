@@ -15,7 +15,7 @@ import br.com.future_mob.service.CachingService;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/categorias")
-public class CategoriaController {	
+public class CategoriaController {	 
 	@Autowired
 	private CategoriaRepository rep;
 

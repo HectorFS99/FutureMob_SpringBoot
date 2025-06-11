@@ -89,7 +89,7 @@
             });
 
         transformarTabela('#tabela-categoria');
-    });
+    }); 
 
     </script>
 </html>

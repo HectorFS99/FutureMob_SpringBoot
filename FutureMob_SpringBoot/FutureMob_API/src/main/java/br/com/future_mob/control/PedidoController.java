@@ -14,7 +14,7 @@ import br.com.future_mob.repository.PedidoRepository;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/pedidos")
-public class PedidoController {	
+public class PedidoController {	 
 	@Autowired
 	private PedidoRepository rep;
 	

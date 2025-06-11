@@ -89,7 +89,7 @@
                         <a class="btn-tabela btn-editar" href="edicao-produto.php?id_produto=${linha.idProduto}">
                             <i class="fa-solid fa-pen"></i>
                         </a>
-                            </div>
+                            </div> 
                         </td>
                     </tr>
                 `;

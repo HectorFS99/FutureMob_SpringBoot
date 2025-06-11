@@ -13,6 +13,6 @@
     if (!$conecta_db) {
         die(print_r(sqlsrv_errors(), true));
     } else {
-        echo "Conexão bem-sucedida!";
+        echo "Conexão bem-sucedida!"; 
     }
 ?>

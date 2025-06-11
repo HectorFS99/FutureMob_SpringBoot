@@ -22,7 +22,7 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioRepository rep;
 	
-	@GetMapping(value = "/todos")
+	@GetMapping(value = "/todos") 
 	public List<Usuario> retornarTodos() {
 		return rep.findAll();
 	}

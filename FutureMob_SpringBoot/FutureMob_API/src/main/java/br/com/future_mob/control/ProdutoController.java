@@ -14,7 +14,7 @@ import br.com.future_mob.repository.ProdutoRepository;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/produtos")
-public class ProdutoController {	
+public class ProdutoController {	 
 	@Autowired
 	private ProdutoRepository rep;
 	

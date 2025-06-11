@@ -105,7 +105,7 @@
             });
 
         transformarTabela('#tabela-usuarios');
-    });
+    }); 
 
     </script>
 </html>
