@@ -1,21 +1,21 @@
 <?php
-    include '../conexao.php';
+//     include '../conexao.php';
 
-    $sql_usuarios = mysql_query(
-        "SELECT 
-            `id_usuario`
-            , `nome_completo`
-            , `cpf`
-            , `rg`
-            , `dt_nascimento`
-            , `sexo`
-            , `telefone_celular`
-            , `email`
-            , `senha`
-            , `admin` 
-        FROM
-            `usuarios`");
-?>
+//     $sql_usuarios = mysql_query(
+//         "SELECT 
+//             `id_usuario`
+//             , `nome_completo`
+//             , `cpf`
+//             , `rg`
+//             , `dt_nascimento`
+//             , `sexo`
+//             , `telefone_celular`
+//             , `email`
+//             , `senha`
+//             , `admin` 
+//         FROM
+//             `usuarios`");
+// ?>
 <html lang="pt-br">
     <head>
         <?php include '/componentes/adm_head.php'; ?>
@@ -51,53 +51,61 @@
                         </tr>
                     </thead>
                     <!-- Corpo da tabela -->
-                    <tbody>
-                        <?php while ($linha = mysql_fetch_assoc($sql_usuarios)) { ?> 
-                            <tr class="tabela-linha">
-                                <td><?php echo $linha['id_usuario']; ?></td>
-                                <td>
-                                    <?php
-                                        // Limita o nome para 30 caracteres e adiciona "..." se for maior.
-                                        $nome = $linha['nome_completo'];
-                                        echo 
-                                            mb_strlen($nome) > 30 ? mb_substr($nome, 0, 30) . "..." : $nome;
-                                    ?>
-                                </td>
-                                <td><?php echo $linha['cpf']; ?></td>
-                                <td><?php echo $linha['rg']; ?></td>
-                                <td><?php echo $linha['dt_nascimento']; ?></td>
-                                <td>
-                                    <?php
-                                        $sexo = $linha['sexo'];                                
-                                        if ($sexo == 'M') {
-                                            echo 'Masculino';
-                                        } else if ($sexo == 'F') {
-                                            echo 'Feminino';
-                                        } else {
-                                            echo 'Não informado';
-                                        }
-                                    ?>
-                                </td>
-                                <td><?php echo $linha['telefone_celular']; ?></td>
-                                <td><?php echo $linha['email']; ?></td>
-                                <td><?php echo $linha['admin'] ? 'Sim' : 'Não'; ?></td>
-                                <td>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <a class="btn-tabela btn-excluir" href="acoes_php/usuario/excluir-usuario.php?apagar=<?php echo $linha['id_usuario']; ?>">
-                                            <i class="fa-solid fa-trash-can"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr> 
-                        <?php } ?>
+                    <tbody id="usuarios-tbody">
+                       <!-- Conteúdo será preenchido via JS -->
                     </tbody>
                 </table>               
             </div>
         </main>
     </body>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            transformarTabela('#tabela-usuarios');
+         // Função para limitar o nome a 30 caracteres
+    function limitarNome(nome) {
+        return nome.length > 30 ? nome.substring(0, 30) + "..." : nome;
+    }
+
+    function renderizarUsuarios(usuarios) {
+        const tbody = document.getElementById('usuarios-tbody');
+        tbody.innerHTML = '';
+        usuarios.forEach(linha => {
+            tbody.innerHTML += `
+                    <tr class="tabela-linha">
+                <td>${linha.idUsuario}</td>
+                <td>${limitarNome(linha.nomeCompleto)}</td>
+                <td>${linha.cpf}</td>
+                <td>${linha.rg}</td>
+                <td>${linha.dataNascimento}</td>
+                <td>${linha.sexo}</td>
+                <td>${linha.telefoneCelular}</td>
+                <td>${linha.email}</td>
+                <td>${linha.admin}</td>
+                <td>${linha.caminhoImgPerfil}</td>
+                <td>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <a class="btn-tabela btn-excluir" href="acoes_php/produto/excluir-produto.php?apagar=${linha.idProduto}">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </a>
+                        <a class="btn-tabela btn-editar" href="edicao-produto.php?id_produto=${linha.idProduto}">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+                            </div>
+                        </td>
+                    </tr>
+                `;
         });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('http://localhost:8080/Usuarios/todos')
+            .then(response => response.json())
+            .then(data => renderizarUsuarios(data))
+            .catch(error => {
+                console.log(error)
+                document.getElementById('usuarios-tbody').innerHTML = '<tr><td colspan="9">Erro ao carregar usuarios.</td></tr>';
+            });
+
+        transformarTabela('#tabela-usuarios');
+    });
+
     </script>
 </html>

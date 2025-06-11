@@ -1,16 +1,16 @@
 <?php
    	header('Content-Type: text/html; charset=utf-8');
-    include '../conexao.php';
+   // include '../conexao.php';
 
-    $sql_categoria = mysql_query(
-        "SELECT 
-            `id_categoria`,
-            `nome`,
-            `descricao`,
-            `caminho_icone`
-        FROM 
-            `categorias`;");
-?>
+    // $sql_categoria = mysql_query(
+//         "SELECT 
+//             `id_categoria`,
+//             `nome`,
+//             `descricao`,
+//             `caminho_icone`
+//         FROM 
+//             `categorias`;");
+// ?>
 <html lang="pt-br">
     <head>
         <?php include '/componentes/adm_head.php'; ?>
@@ -41,40 +41,55 @@
                         </tr>
                     </thead>
                     <!-- Corpo da tabela -->
-                    <tbody>
-                        <?php while ($linha = mysql_fetch_assoc($sql_categoria)) { ?> 
-                            <tr class="tabela-linha">
-                                <td><?php echo $linha['id_categoria']; ?></td>
-                                <td>
-                                    <?php
-                                        // Limita o nome para 30 caracteres e adiciona "..." se for maior.
-                                        $nome = $linha['nome'];
-                                        echo 
-                                            mb_strlen($nome) > 30 ? mb_substr($nome, 0, 30) . "..." : $nome;
-                                    ?>
-                                </td>
-                                <td><?php echo $linha['descricao']; ?></td>
-                                <td> <?php echo $linha['caminho_icone']; ?></td>
-                                <td>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <a class="btn-tabela btn-excluir" href="acoes_php/categoria/excluir-categoria.php?apagar=<?php echo $linha['id_categoria']; ?>">
-                                            <i class="fa-solid fa-trash-can"></i>
-                                        </a>
-                                        <a class="btn-tabela btn-editar" href="edicao-categoria.php?editar=<?php echo $linha['id_categoria']; ?>">
-                                            <i class="fa-solid fa-pen"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr> 
-                        <?php } ?>
+                    <tbody id="categorias-tbody">
+                    <!-- Conteúdo será preenchido via JS -->
                     </tbody>
                 </table>               
             </div>
         </main>
     </body>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            transformarTabela('#tabela-categoria');
+
+        // Função para limitar o nome a 30 caracteres
+    function limitarNome(nome) {
+        return nome.length > 30 ? nome.substring(0, 30) + "..." : nome;
+    }
+
+    function renderizarCategorias(categorias) {
+        const tbody = document.getElementById('categorias-tbody');
+        tbody.innerHTML = '';
+        categorias.forEach(linha => {
+            tbody.innerHTML += `
+                    <tr class="tabela-linha">
+                <td>${linha.idCategoria}</td>
+                <td>${limitarNome(linha.nome)}</td>
+                <td>${linha.descricao}</td>
+                <td>${linha.caminhoIcone}</td>
+                <td>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <a class="btn-tabela btn-excluir" href="acoes_php/produto/excluir-produto.php?apagar=${linha.idProduto}">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </a>
+                        <a class="btn-tabela btn-editar" href="edicao-produto.php?id_produto=${linha.idProduto}">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+                            </div>
+                        </td>
+                    </tr>
+                `;
         });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('http://localhost:8080/categorias/todos')
+            .then(response => response.json())
+            .then(data => renderizarCategorias(data))
+            .catch(error => {
+                document.getElementById('categorias-tbody').innerHTML = '<tr><td colspan="9">Erro ao carregar categorias.</td></tr>';
+            });
+
+        transformarTabela('#tabela-categoria');
+    });
+
     </script>
 </html>

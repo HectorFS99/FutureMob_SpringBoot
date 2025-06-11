@@ -1,9 +1,18 @@
 <?php
-    $servidor = "localhost";
-    $usuario = "root";
-    $senha = "usbw";
+    $servidor = "localhost\DESKTOP-FHBAJ3H";  // ou IP + nome da instância, ex: "localhost\SQLEXPRESS"
+    $usuario = "FutureMob";
+    $senha = "futuro";
     $banco = "future_mob";
 
-    $conecta_db = mysql_connect($servidor, $usuario, $senha) or die (mysql_error());
-    mysql_select_db($banco) or die ("Erro ao conectar ao banco de dados.");
+    // Parâmetros de conexão
+    $connectionInfo = array("Database"=>$banco, "UID"=>$usuario, "PWD"=>$senha);
+
+    // Conecta ao SQL Server
+    $conecta_db = sqlsrv_connect($servidor, $connectionInfo);
+
+    if (!$conecta_db) {
+        die(print_r(sqlsrv_errors(), true));
+    } else {
+        echo "Conexão bem-sucedida!";
+    }
 ?>
