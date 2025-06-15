@@ -10,14 +10,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.future_mob.model.Usuario;
 import br.com.future_mob.repository.UsuarioRepository;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.tags.Tag;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = "/Usuarios")
-@Tag(name = "Usuários", description = "Operações relacionadas a usuários")
+@RequestMapping(value = "/usuarios")
 public class UsuarioController {	
 	@Autowired
 	private UsuarioRepository rep;
@@ -28,10 +24,6 @@ public class UsuarioController {
 	}
 	
     @GetMapping("/{id}")
-    @Operation(summary = "Buscar usuário por ID", 
-               description = "Retorna um usuário com base no ID fornecido")
-    @ApiResponse(responseCode = "200", description = "Usuário encontrado")
-    @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
 	public Usuario retornarPorID(@PathVariable Integer id) {
 		Optional<Usuario> op =  rep.findById(id);
 		

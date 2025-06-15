@@ -13,10 +13,10 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pedido")
-    private Integer idPedido;
+    private Integer id_pedido;
 
     @Column(name = "dt_pedido", nullable = false)
-    private LocalDateTime dataPedido = LocalDateTime.now();
+    private LocalDateTime dt_pedido = LocalDateTime.now();
 
     @Column(name = "subtotal", precision = 10, scale = 2, nullable = false)
     private BigDecimal subtotal;
@@ -56,7 +56,7 @@ public class Pedido {
     public Pedido() { }
 
     public Pedido(
-        LocalDateTime dataPedido
+        LocalDateTime dt_pedido
         , BigDecimal subtotal
         , BigDecimal frete
         , BigDecimal descontos
@@ -67,7 +67,7 @@ public class Pedido {
         , Status status
         , LocalDate dataEntrega
         , Usuario usuario) {
-        this.dataPedido = dataPedido != null ? dataPedido : LocalDateTime.now();
+        this.dt_pedido = dt_pedido != null ? dt_pedido : LocalDateTime.now();
         this.subtotal = subtotal;
         this.frete = frete;
         this.descontos = descontos;
@@ -81,19 +81,19 @@ public class Pedido {
     }
 
     public Integer getIdPedido() {
-        return idPedido;
+        return id_pedido;
     }
 
     public void setIdPedido(Integer idPedido) {
-        this.idPedido = idPedido;
+        this.id_pedido = idPedido;
     }
 
     public LocalDateTime getDataPedido() {
-        return dataPedido;
+        return dt_pedido;
     }
 
     public void setDataPedido(LocalDateTime dataPedido) {
-        this.dataPedido = dataPedido;
+        this.dt_pedido = dataPedido;
     }
 
     public BigDecimal getSubtotal() {

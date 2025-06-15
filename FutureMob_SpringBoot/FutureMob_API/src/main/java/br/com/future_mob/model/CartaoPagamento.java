@@ -2,7 +2,6 @@ package br.com.future_mob.model;
 
 import jakarta.persistence.*;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Entity
