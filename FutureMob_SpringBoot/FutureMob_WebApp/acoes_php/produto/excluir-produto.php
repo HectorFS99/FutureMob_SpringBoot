@@ -1,3 +1,4 @@
+<!-- codigo desnecessário -->
 <?php
     if (isset($_GET['apagar'])) {
         $id = $_GET['apagar'];

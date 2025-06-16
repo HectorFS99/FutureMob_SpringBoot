@@ -49,10 +49,10 @@
                         <td>${linha.caminhoIcone}</td>
                         <td>
                             <div class="d-flex align-items-center justify-content-between">
-                                <a class="btn-tabela btn-excluir" href="acoes_php/produto/excluir-produto.php?apagar=${linha.idProduto}">
+                                <a class="btn-tabela btn-excluir" href="acoes_php/categoria/excluir-categoria.php?apagar=${linha.idCategoria}">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
-                                <a class="btn-tabela btn-editar" href="edicao-produto.php?id_produto=${linha.idProduto}">
+                                <a class="btn-tabela btn-editar" href="edicao-categoria.php?id_categoria=${linha.idCategoria}">
                                     <i class="fa-solid fa-pen"></i>
                                 </a>
                             </div>

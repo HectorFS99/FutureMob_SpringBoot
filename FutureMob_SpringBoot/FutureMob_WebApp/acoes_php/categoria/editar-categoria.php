@@ -1,3 +1,4 @@
+<!-- codigo desnecessário  -->
 <?php
     include '../conectar_banco_dados.php';
 
