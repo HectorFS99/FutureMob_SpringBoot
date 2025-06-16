@@ -13,7 +13,7 @@
                     Novo Produto
                 </h3>
             </div>
-            <form method="POST" id="form_cad_produtos" name="form_cad_produtos" class="formulario w-100" onsubmit="adicionarRegistro(event, 'form_cad_produtos', 'http://localhost:8080/produtos/criar', '/adm_produtos.php');">
+            <form method="POST" id="form_cad_produtos" name="form_cad_produtos" class="formulario w-100" onsubmit="adicionarRegistro(event, 'form_cad_produtos', 'http://localhost:8080/produtos/criar', 'adm_produtos.php');">
                 <!-- Nome, preço anterior e preço atual -->
                 <div class="formulario-grupo">
                     <div class="form-floating">
@@ -108,4 +108,31 @@
             </form>
         </main>
     </body>
+    <script>
+    async function adicionarRegistro(event, formId, apiUrl, redirectUrl) {
+    event.preventDefault();
+    
+    try {
+        const form = document.getElementById(formId);
+        const formData = new FormData(form); 
+
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            body: formData 
+        });
+
+        if (!response.ok) {
+            const errorData = await response.text();
+            throw new Error(errorData || 'Erro ao cadastrar categoria');
+        }
+
+        alert('Cadastro realizado com sucesso!');
+        window.location.href = redirectUrl;
+
+    } catch (error) {
+        console.error('Erro detalhado:', error);
+        alert(`Falha no cadastro: ${error.message}\n\nVerifique o console para mais detalhes (F12)`);
+    }
+}
+</script>
 </html>

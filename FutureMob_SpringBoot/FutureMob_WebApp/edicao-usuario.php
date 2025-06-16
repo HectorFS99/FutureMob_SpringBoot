@@ -1,3 +1,61 @@
+<?php
+    $ID = 0;
+    $usuario = null;
+
+// ... resto do seu código atual ...
+    // Buscar usuário pela API
+    if (isset($_GET['id_usuario'])) {
+        $ID = $_GET['id_usuario'];
+
+        $url = "http://localhost:8080/usuarios/$ID";
+        $json = @file_get_contents($url);
+
+        if ($json !== false) {
+            $usuario = json_decode($json, true);
+        } else {
+            echo "<script>alert('Usuário não encontrado!');window.location.href='adm_usuarios.php';</script>";
+            exit;
+        }
+    }
+
+    // Atualizar usuário via API
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $dados = array(
+            "idUsuario" => $ID,
+            "nomeCompleto" => isset($_POST['nomeCompleto']) ? $_POST['nomeCompleto'] : '',
+            "cpf" => isset($_POST['cpf']) ? $_POST['cpf'] : '',
+            "rg" => isset($_POST['rg']) ? $_POST['rg'] : '',
+            "dataNascimento" => isset($_POST['dataNascimento']) ? $_POST['dataNascimento'] : '',
+            "sexo" => isset($_POST['sexo']) ? $_POST['sexo'] : '',
+            "telefoneCelular" => isset($_POST['telefoneCelular']) ? $_POST['telefoneCelular'] : '',
+            "admin" => isset($_POST['admin']) ? filter_var($_POST['admin'], FILTER_VALIDATE_BOOLEAN) : false,
+            "caminhoImgPerfil" => isset($_POST['caminhoImgPerfil']) ? $_POST['caminhoImgPerfil'] : '',
+            "email" => isset($_POST['email']) ? $_POST['email'] : '',
+            "senha" => isset($_POST['senha']) ? $_POST['senha'] : ''
+        );
+
+        $url = "http://localhost:8080/usuarios/atualizar/$ID";
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($dados));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen(json_encode($dados))
+        ));
+
+        $result = curl_exec($ch);
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($httpcode == 200) {
+            echo "<script>alert('Usuário atualizado com sucesso!');window.location.href='adm_usuarios.php';</script>";
+            exit;
+        } else {
+            echo "<script>alert('Erro ao atualizar usuário!');</script>";
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -10,13 +68,12 @@
         <main class="conteudo-principal">
             <div class="titulo-opcoes">
                 <h3 class="titulo">
-                    <a href="adm_produtos.php" class="btn-voltar"><i class="fa-solid fa-arrow-left"></i></a>
+                    <a href="adm_usuarios.php" class="btn-voltar"><i class="fa-solid fa-arrow-left"></i></a>
                     Novo Usuário
                 </h3>
             </div>
-            <form method="POST" id="form_cad_usuarios" name="form_cad_usuarios" class="formulario w-100"
-                onsubmit="adicionarRegistro(event, 'form_cad_usuarios', 'http://localhost:8080/usuarios/criar', 'adm_usuarios.php');">
-                
+            <form method="POST" name="form_ed_usuarios" class="formulario w-100">
+                <input type="hidden" name="id_usuario" value="<?= htmlspecialchars(isset($usuario['idUsuario']) ? $usuario['idUsuario'] : '') ?>">
                 <!-- Nome completo, CPF e RG -->
                 <div class="formulario-grupo">
                     <div class="form-floating">
@@ -26,7 +83,7 @@
                         </div>
                     </div>
                     <div class="form-floating">
-                        <input name="cpf" id="cpf" type="text" class="form-control" placeholder="CPF" onfocusout="validarCPF('cpf', 'cpf_erro');" maxlength="11" required>
+                        <input name="cpf" id="cpf" type="text" class="form-control" placeholder="CPF" value="<?= htmlspecialchars(isset($usuario['cpf']) ? $usuario['cpf'] : '') ?>" onfocusout="validarCPF('cpf', 'cpf_erro');" maxlength="11" required>
                         <label for="cpf">CPF:</label>
                         <div id="cpf_erro" class="invalid-feedback">
                         </div>
@@ -79,7 +136,7 @@
                 <!-- Email e senha -->
                 <div class="formulario-grupo">
                     <div class="form-floating">
-                        <input name="email" id="email" type="email" class="form-control" placeholder="E-mail" onfocusout="validarEmail('email', 'email_erro');" required>
+                        <input name="email" id="email" type="email" class="form-control" placeholder="E-mail" value="<?= htmlspecialchars(isset($usuario['email']) ? $usuario['email'] : '') ?>" onfocusout="validarEmail('email', 'email_erro');" required>
                         <label for="email">E-mail:</label>
                         <div id="email_erro" class="invalid-feedback">
                         </div>                            
@@ -103,31 +160,5 @@
             </form>
         </main>
     </body>
-<script>
-    async function adicionarRegistro(event, formId, apiUrl, redirectUrl) {
-    event.preventDefault();
-    
-    try {
-        const form = document.getElementById(formId);
-        const formData = new FormData(form); 
 
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            body: formData 
-        });
-
-        if (!response.ok) {
-            const errorData = await response.text();
-            throw new Error(errorData || 'Erro ao cadastrar categoria');
-        }
-
-        alert('Cadastro realizado com sucesso!');
-        window.location.href = redirectUrl;
-
-    } catch (error) {
-        console.error('Erro detalhado:', error);
-        alert(`Falha no cadastro: ${error.message}\n\nVerifique o console para mais detalhes (F12)`);
-    }
-}
-</script>
 </html>

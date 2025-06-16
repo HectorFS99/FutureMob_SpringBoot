@@ -11,7 +11,7 @@
                     <a href="adm_index.php" class="btn-voltar"><i class="fa-solid fa-arrow-left"></i></a>
                     Usuários
                 </h3>
-                <button onclick="window.location.href='/cadastro-usuario.php'" class="botao btn-adicionar">
+                <button onclick="window.location.href='cadastro-usuario.php'" class="botao btn-adicionar">
                     <i class="fa-solid fa-square-plus"></i> Adicionar
                 </button>
             </div>
@@ -41,6 +41,27 @@
         </main>
     </body>
     <script>
+    
+    async function excluirUsuario(idUsuario) {
+            if (confirm('Tem certeza que deseja excluir este usuario?')) {
+                try {
+                    const response = await fetch(`http://localhost:8080/usuarios/${idUsuario}`, {
+                        method: 'DELETE'
+                    });
+                    
+                    if (response.ok) {
+                        alert('Usuarios excluído com sucesso!');
+                        location.reload();
+                    } else {
+                        throw new Error('Falha ao excluir Usuario');
+                    }
+                } catch (error) {
+                    console.error('Erro:', error);
+                    alert('Erro ao excluir usuario');
+                }
+            }
+        }
+    
         function limitarNome(nome) {
             return nome.length > 30 ? nome.substring(0, 30) + "..." : nome;
         }
@@ -63,10 +84,10 @@
                         <td>${linha.admin}</td>
                         <td>
                             <div class="d-flex align-items-center justify-content-between">
-                                <a class="btn-tabela btn-excluir" href="acoes_php/produto/excluir-produto.php?apagar=${linha.idProduto}">
+                                <a class="btn-tabela btn-excluir" onclick= "excluirUsuario(${linha.idUsuario})">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
-                                <a class="btn-tabela btn-editar" href="edicao-produto.php?id_produto=${linha.idProduto}">
+                                <a class="btn-tabela btn-editar" href="edicao-usuario.php?id_usuario=${linha.idUsuario}">
                                     <i class="fa-solid fa-pen"></i>
                                 </a>
                             </div>
