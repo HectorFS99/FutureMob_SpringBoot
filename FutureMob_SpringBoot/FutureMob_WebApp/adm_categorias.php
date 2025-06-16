@@ -62,6 +62,36 @@
             });
         }
 
+        async function excluirCategoria(idCategoria) {
+            if (confirm('Tem certeza que deseja excluir esta categoria?')) {
+                try {
+                    const url = `http://localhost:8080/categorias/${idCategoria}`;
+                    
+                    const response = await fetch(url, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            
+                        }
+                    });
+
+            if (response.ok) {
+                
+                const row = document.querySelector(`tr[data-id="${idCategoria}"]`);
+                if (row) {
+                    row.remove();
+                    alert('Categoria excluída com sucesso!');
+                }
+            } else {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Falha ao excluir categoria');
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Erro ao excluir categoria');
+                }
+            }
+        }
         document.addEventListener('DOMContentLoaded', function () {
             fetch('http://localhost:8080/categorias/todos')
                 .then(response => response.json())
