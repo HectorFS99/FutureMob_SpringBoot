@@ -56,16 +56,22 @@ public class ProdutoController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public Produto remover(@PathVariable Integer id) {	
+	public Produto remover(@PathVariable Integer id) {
 		Optional<Produto> op = rep.findById(id);
-		
-		if(op.isPresent()) {
+
+		if (op.isPresent()) {
 			Produto obj = op.get();
-			rep.deleteById(id);
-			
-			return obj;
+			try {
+				rep.deleteById(id);
+				return obj;
+			} catch (org.springframework.dao.DataIntegrityViolationException e) {
+				throw new org.springframework.web.server.ResponseStatusException(
+					HttpStatus.CONFLICT,
+					"Não é possível excluir: produto vinculado a pedidos."
+				);
+			}
 		} else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		}		
+			throw new org.springframework.web.server.ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
 	}
 }

@@ -75,7 +75,7 @@
         async function excluirProduto(idProduto) {
             if (confirm('Tem certeza que deseja excluir este produto?')) {
                 try {
-                    const response = await fetch(`http://localhost:8080/produtos/remover/${idProduto}`, {
+                    const response = await fetch(`http://localhost:8080/produtos/${idProduto}`, {
                         method: 'DELETE'
                     });
                     
