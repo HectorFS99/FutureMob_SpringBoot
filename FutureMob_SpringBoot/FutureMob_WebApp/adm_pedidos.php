@@ -177,17 +177,17 @@
                     </tr>
                 `;
             });
+
+            transformarTabela('#tabela-pedidos');
         }
 
         document.addEventListener('DOMContentLoaded', function () {
             fetch('http://localhost:8080/pedidos/todos')
-                .then(response => response.json())
-                .then(data => renderizarPedidos(data))
-                .catch(error => {
-                    document.getElementById('pedidos-tbody').innerHTML = '<tr><td colspan="9">Erro ao carregar pedidos.</td></tr>';
-                });
-
-            transformarTabela('#tabela-pedidos');
+            .then(response => response.json())
+            .then(data => renderizarPedidos(data))
+            .catch(error => {
+                document.getElementById('pedidos-tbody').innerHTML = '<tr><td colspan="9">Erro ao carregar pedidos.</td></tr>';
+            });
         });
     </script>
 </html>

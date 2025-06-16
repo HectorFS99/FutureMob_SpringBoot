@@ -40,6 +40,7 @@
         function renderizarCategorias(categorias) {
             const tbody = document.getElementById('categorias-tbody');
             tbody.innerHTML = '';
+            
             categorias.forEach(linha => {
                 tbody.innerHTML += `
                     <tr class="tabela-linha">
@@ -60,17 +61,17 @@
                     </tr>
                 `;
             });
+
+            transformarTabela('#tabela-categoria');
         }
 
         document.addEventListener('DOMContentLoaded', function () {
             fetch('http://localhost:8080/categorias/todos')
-                .then(response => response.json())
-                .then(data => renderizarCategorias(data))
-                .catch(error => {
-                    document.getElementById('categorias-tbody').innerHTML = '<tr><td colspan="9">Erro ao carregar categorias.</td></tr>';
-                });
-
-            transformarTabela('#tabela-categoria');
+            .then(response => response.json())
+            .then(data => renderizarCategorias(data))
+            .catch(error => {
+                document.getElementById('categorias-tbody').innerHTML = '<tr><td colspan="9">Erro ao carregar categorias.</td></tr>';
+            });
         });
     </script>
 </html>

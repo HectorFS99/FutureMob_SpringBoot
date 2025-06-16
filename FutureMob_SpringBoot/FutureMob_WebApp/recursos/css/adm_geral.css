@@ -8,7 +8,6 @@ body {
     animation: gradientAnimation 10s ease infinite;
     color: whitesmoke;
     text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
-    /* background-image: url(../imagens/papeis_parede/building_bottom_view_facade_1285566_1920x1200.jpg) */
 }
 
 @keyframes gradientAnimation {
@@ -29,9 +28,15 @@ body {
 /******** Sweet Alert 2 (Popups) ********/
 .custom-popup {
     border-radius: 1rem;
-    /*box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;*/
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(20px);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background: rgba(28, 28, 28, 0.6);
+    backdrop-filter: blur(15px);
+    text-shadow: none;
+    color: #EEEEEE;
+}
+
+.swal2-success-circular-line-left, .swal2-success-circular-line-right, .swal2-success-fix {
+    background-color: rgba(28, 28, 28, 0) !important;
 }
 
 .custom-error-popup {
@@ -48,7 +53,7 @@ body {
 }
 
 body.swal2-shown>[aria-hidden="true"] {
-    filter: blur(25px);
+    filter: blur(15px);
     transition: 0.5s all;
 }
 
@@ -291,19 +296,24 @@ textarea {
     resize: none;
 }
 
+.formulario label {
+    font-weight: 600 !important;
+    text-shadow: none;
+}
+
 .formulario input,
 .formulario select,
 .formulario textarea {
     transition: all 0.25s;
     font-size: 0.9rem;
     border: none;
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(20px);
 }
     .formulario input:focus,
     .formulario select:focus,
     .formulario textarea:focus {
-        background: rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(20px);
         box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     }
@@ -312,6 +322,10 @@ textarea {
         box-shadow: none !important;
         border: none !important;
         outline: none;
+    }
+
+    input:active {
+        color: black !important;
     }
 
 .form-floating,
@@ -385,4 +399,9 @@ textarea {
 
 .detalhes_ped-titulo_info i {
     margin-right: .25rem;
+}
+
+.invalid-feedback > span {
+    text-shadow: none;
+    color: rgb(200, 200, 200);
 }

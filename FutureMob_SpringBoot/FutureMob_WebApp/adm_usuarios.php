@@ -11,7 +11,7 @@
                     <a href="adm_index.php" class="btn-voltar"><i class="fa-solid fa-arrow-left"></i></a>
                     Usuários
                 </h3>
-                <button onclick="window.location.href='../cadastro.php'" class="botao btn-adicionar">
+                <button onclick="window.location.href='/cadastro-usuario.php'" class="botao btn-adicionar">
                     <i class="fa-solid fa-square-plus"></i> Adicionar
                 </button>
             </div>
@@ -48,6 +48,7 @@
         function renderizarUsuarios(usuarios) {
             const tbody = document.getElementById('usuarios-tbody');
             tbody.innerHTML = '';
+
             usuarios.forEach(linha => {
                 tbody.innerHTML += `
                     <tr class="tabela-linha">
@@ -73,6 +74,8 @@
                     </tr>
                 `;
             });
+
+            transformarTabela('#tabela-usuarios');
         }
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -83,8 +86,6 @@
                 console.log(error)
                 document.getElementById('usuarios-tbody').innerHTML = '<tr><td colspan="9">Erro ao carregar usuarios.</td></tr>';
             });
-
-            transformarTabela('#tabela-usuarios');
         });
     </script>
 </html>

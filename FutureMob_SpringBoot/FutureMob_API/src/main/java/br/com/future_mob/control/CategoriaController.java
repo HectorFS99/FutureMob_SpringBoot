@@ -5,10 +5,13 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import br.com.future_mob.model.Categoria;
+import br.com.future_mob.model.Produto;
 import br.com.future_mob.repository.CategoriaRepository;
 import br.com.future_mob.service.CachingService;
 
@@ -37,11 +40,17 @@ public class CategoriaController {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}		
 	}
-	
-	@PostMapping(value = "/criar")
-	public Categoria criar(@RequestBody Categoria obj) {
-		rep.save(obj);
-		return obj;
+
+	@PostMapping(value = "/criar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<?> criar(@ModelAttribute Categoria obj) {
+		try {
+			rep.save(obj);
+			return ResponseEntity.ok(obj);
+		} catch (Exception ex) {
+			return ResponseEntity
+				.status(HttpStatus.BAD_REQUEST)
+				.body("Erro ao salvar o registro: " + ex.getMessage());
+		}
 	}
 	
 	@PutMapping(value = "/atualizar/{id}")

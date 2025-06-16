@@ -1,11 +1,16 @@
 package br.com.future_mob.control;
 
+import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.server.ResponseStatusException;
 
 import br.com.future_mob.model.Produto;
@@ -33,13 +38,19 @@ public class ProdutoController {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}		
 	}
-	
-	@PostMapping(value = "/criar")
-	public Produto criar(@RequestBody Produto obj) {
-		rep.save(obj);
-		return obj;
+
+	@PostMapping(value = "/criar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<?> criar(@ModelAttribute Produto obj) {
+		try {
+			rep.save(obj);
+			return ResponseEntity.ok(obj);
+		} catch (Exception ex) {
+			return ResponseEntity
+				.status(HttpStatus.BAD_REQUEST)
+				.body("Erro ao salvar o registro: " + ex.getMessage());
+		}
 	}
-	
+		
 	@PutMapping(value = "/atualizar/{id}")
 	public Produto atualizar(@PathVariable Integer id, @RequestBody Produto obj_atualizado) {	
 		Optional<Produto> op = rep.findById(id);

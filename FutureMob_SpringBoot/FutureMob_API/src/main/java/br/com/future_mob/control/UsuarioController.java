@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -34,10 +36,28 @@ public class UsuarioController {
 		}		
 	}
 	
-	@PostMapping(value = "/criar")
-	public Usuario criar(@RequestBody Usuario obj) {
-		rep.save(obj);
-		return obj;
+	@PostMapping(value = "/criar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<?> criar(@ModelAttribute Usuario obj) {
+		try {
+			if (rep.existsByCpf(obj.getCpf())) {
+				return ResponseEntity
+					.status(HttpStatus.CONFLICT)
+					.body("Já existe um usuário com o CPF informado.");
+			}
+
+			if (rep.existsByEmail(obj.getEmail())) {
+				return ResponseEntity
+					.status(HttpStatus.CONFLICT)
+					.body("Já existe um usuário com o e-mail informado.");
+			}
+
+			rep.save(obj);
+			return ResponseEntity.ok(obj);
+		} catch (Exception ex) {
+			return ResponseEntity
+				.status(HttpStatus.BAD_REQUEST)
+				.body("Erro ao salvar o registro: " + ex.getMessage());
+		}
 	}
 	
 	@PutMapping(value = "/atualizar/{id}")

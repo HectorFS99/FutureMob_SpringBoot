@@ -45,6 +45,7 @@
         function renderizarProdutos(produtos) {
             const tbody = document.getElementById('produtos-tbody');
             tbody.innerHTML = '';
+            
             produtos.forEach(linha => {
                 tbody.innerHTML += `
                     <tr class="tabela-linha">
@@ -69,6 +70,8 @@
                     </tr>
                 `;
             });
+            
+            transformarTabela('#tabela-produtos');
         }
 
         // Função para excluir produto via API
@@ -99,8 +102,6 @@
             .catch(error => {
                 document.getElementById('produtos-tbody').innerHTML = '<tr><td colspan="9">Erro ao carregar produtos.</td></tr>';
             });
-
-            transformarTabela('#tabela-produtos');
         });
     </script>
 </html>
