@@ -50,7 +50,7 @@
                         <td>${linha.caminhoIcone}</td>
                         <td>
                             <div class="d-flex align-items-center justify-content-between">
-                                <a class="btn-tabela btn-excluir" href="acoes_php/categoria/excluir-categoria.php?apagar=${linha.idCategoria}">
+                                <a class="btn-tabela btn-excluir" onclick="excluirCategoria(${linha.idCategoria})">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
                                 <a class="btn-tabela btn-editar" href="edicao-categoria.php?id_categoria=${linha.idCategoria}">
