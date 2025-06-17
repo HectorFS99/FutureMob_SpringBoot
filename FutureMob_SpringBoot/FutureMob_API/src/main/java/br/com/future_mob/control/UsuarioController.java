@@ -31,6 +31,16 @@ public class UsuarioController {
 	public ResponseEntity<?> autenticar(@ModelAttribute AutenticacaoDTO dto) {
 		try {
 			UsuarioDTO usr = rep.autenticar(dto.getEmail(), dto.getSenha());
+			if (usr == null) {
+				return ResponseEntity
+					.status(HttpStatus.NOT_FOUND)
+					.body("Usuário não encontrado.");
+			} else if (!usr.getAdmin()) {
+				return ResponseEntity
+					.status(HttpStatus.UNAUTHORIZED)
+					.body("Você não tem permissão para acessar o painel administrativo.");				
+			}
+			
 			return ResponseEntity.ok(usr);
 		} catch (Exception ex) {
 			return ResponseEntity
