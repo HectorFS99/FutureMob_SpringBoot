@@ -47,7 +47,11 @@
                         <td>${linha.idCategoria}</td>
                         <td>${limitarNome(linha.nome)}</td>
                         <td>${linha.descricao}</td>
-                        <td>${linha.caminhoIcone}</td>
+                        <td>
+                            <div>
+                                <img src="${linha.caminhoIcone}" width="50"/>
+                            </div>
+                        </td>
                         <td>
                             <div class="d-flex align-items-center justify-content-between">
                                 <a class="btn-tabela btn-excluir" onclick="excluirCategoria(${linha.idCategoria})">
