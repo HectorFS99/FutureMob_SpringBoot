@@ -122,7 +122,6 @@
                 <div class="formulario-grupo">
                     <div class="form-floating">
                         <select name="admin" id="admin" class="form-select" required>
-                        <option value="" <?= !isset($usuario['admin']) || $usuario['admin'] == '' ? 'selected' : '' ?>></option>
                         <option value="Não" <?= isset($usuario['admin']) && $usuario['admin'] == 'Não' ? 'selected' : '' ?>>Não</option>
                         <option value="Sim" <?= isset($usuario['admin']) && $usuario['admin'] == 'Sim' ? 'selected' : '' ?>>Sim</option>
                         </select>
