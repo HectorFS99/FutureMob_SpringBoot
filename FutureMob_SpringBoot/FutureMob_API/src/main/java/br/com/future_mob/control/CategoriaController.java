@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import br.com.future_mob.model.Categoria;
-import br.com.future_mob.model.Produto;
 import br.com.future_mob.repository.CategoriaRepository;
-import br.com.future_mob.service.CachingService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -22,13 +20,9 @@ public class CategoriaController {
 	@Autowired
 	private CategoriaRepository rep;
 
-	@Autowired
-	private CachingService cacheService;
-
 	@GetMapping(value = "/todos")
 	public List<Categoria> retornarTodos() {
-		cacheService.removerCache();
-		return cacheService.retornarCategorias();
+		return rep.findAll();
 	}
 
 	@GetMapping(value = "/{id}")

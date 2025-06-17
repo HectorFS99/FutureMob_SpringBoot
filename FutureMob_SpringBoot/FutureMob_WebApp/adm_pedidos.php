@@ -68,15 +68,14 @@
             tbody.innerHTML = '';
 
             pedidos.forEach(pedido => {
-                const idPedido = pedido.id_pedido;
-                const dataPedido = formatarDataHora(pedido.dt_pedido);
+                const idPedido = pedido.idPedido; // Atenção aqui ao nome correto da chave
+                const dataPedido = formatarDataHora(pedido.dtPedido);
                 const subtotal = formatarMoeda(pedido.subtotal);
                 const frete = formatarMoeda(pedido.frete);
                 const total = formatarMoeda(pedido.total);
                 const status = pedido.statusPedido;
-                const dataEntrega = pedido.dt_entrega ? formatarDataHora(pedido.dt_entrega) : 'Não definida.';
+                const dataEntrega = pedido.dtEntrega ? formatarDataHora(pedido.dtEntrega) : 'Não definida.';
                 const nomeCliente = pedido.nomeCompleto;
-
                 const formaPagamento = pedido.formaPagamento;
                 const numeroCartao = pedido.numeroCartao;
                 const parcelas = pedido.parcelas;
@@ -87,6 +86,7 @@
 
                 const modalDetalhesId = `detalhesPedido_${idPedido}`;
                 const modalProdutosId = `produtosPedido_${idPedido}`;
+                const produtosTbodyId = `produtos-tbody-${idPedido}`;
 
                 tbody.innerHTML += `
                     <tr class="tabela-linha">
@@ -152,7 +152,6 @@
                                 </div>
 
                                 <div id="${modalProdutosId}" style="display: none;">
-                                    <!-- Aqui você pode adicionar uma nova chamada para renderizar os produtos com base no idPedido -->
                                     <table id="tabela-produtos_${idPedido}" class="table table-striped text-center align-middle">
                                         <thead>
                                             <tr class="tabela-linha">
@@ -164,11 +163,10 @@
                                                 <th>Destaque?</th>
                                                 <th width="10%">Oferta?</th>
                                                 <th>Categoria</th>
-                                                <th width="10%">Ações</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="produtos-tbody-${idPedido}">
-                                            <!-- Renderizar produtos via outra função JS -->
+                                        <tbody id="${produtosTbodyId}">
+                                            <!-- Produtos serão adicionados via JS -->
                                         </tbody>
                                     </table>
                                 </div>
@@ -176,6 +174,22 @@
                         </td>
                     </tr>
                 `;
+
+                pedido.produtosPorPedido.forEach(produto => {
+                    const linhaProduto = `
+                        <tr class="tabela-linha">
+                            <td>${produto.idProduto}</td>
+                            <td><img src="${produto.caminhoImagem}" width="50"/></td>
+                            <td>${produto.nome}</td>
+                            <td>${formatarMoeda(produto.precoAnterior)}</td>
+                            <td>${formatarMoeda(produto.precoAtual)}</td>
+                            <td>${produto.destaque ? 'Sim' : 'Não'}</td>
+                            <td>${produto.ofertaRelampago ? 'Sim' : 'Não'}</td>
+                            <td>${produto.categoriaNome || '-'}</td>
+                        </tr>`;
+
+                    document.getElementById(produtosTbodyId).innerHTML += linhaProduto;
+                });
             });
 
             transformarTabela('#tabela-pedidos');

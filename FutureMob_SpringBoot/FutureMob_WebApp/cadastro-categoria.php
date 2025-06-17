@@ -37,31 +37,31 @@
             </form>
         </main>
     </body>
-<script> 
-async function adicionarRegistro(event, formId, apiUrl, redirectUrl) {
-    event.preventDefault();
-    
-    try {
-        const form = document.getElementById(formId);
-        const formData = new FormData(form); 
+    <script> 
+        async function adicionarRegistro(event, formId, apiUrl, redirectUrl) {
+            event.preventDefault();
+            
+            try {
+                const form = document.getElementById(formId);
+                const formData = new FormData(form); 
 
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            body: formData a
-        });
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    body: formData
+                });
 
-        if (!response.ok) {
-            const errorData = await response.text();
-            throw new Error(errorData || 'Erro ao cadastrar categoria');
+                if (!response.ok) {
+                    const errorData = await response.text();
+                    throw new Error(errorData || 'Erro ao cadastrar categoria');
+                }
+
+                alert('Cadastro realizado com sucesso!');
+                window.location.href = redirectUrl;
+
+            } catch (error) {
+                console.error('Erro detalhado:', error);
+                alert(`Falha no cadastro: ${error.message}\n\nVerifique o console para mais detalhes (F12)`);
+            }
         }
-
-        alert('Cadastro realizado com sucesso!');
-        window.location.href = redirectUrl;
-
-    } catch (error) {
-        console.error('Erro detalhado:', error);
-        alert(`Falha no cadastro: ${error.message}\n\nVerifique o console para mais detalhes (F12)`);
-    }
-}
-</script>
-    </html>
+    </script>
+</html>

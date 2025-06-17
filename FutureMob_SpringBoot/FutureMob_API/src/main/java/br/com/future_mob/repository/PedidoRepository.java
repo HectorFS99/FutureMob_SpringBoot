@@ -27,10 +27,10 @@ public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
                 , ender.uf) AS endereco, 
             loj.endereco_completo AS enderecoLoja, 
             stt.nome AS statusPedido, 
-            ped.dt_entrega AS dtEntrega, 
-            usr.nome_completo AS nomeCompleto, 
+            ped.dt_entrega, 
+            usr.nome_completo, 
             usr.email, 
-            usr.telefone_celular AS telefoneCelular 
+            usr.telefone_celular
         FROM 
             pedidos AS ped 
             INNER JOIN pagamentos AS pag ON pag.id_pagamento = ped.id_pagamento 

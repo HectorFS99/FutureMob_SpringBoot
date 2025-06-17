@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import br.com.future_mob.model.DTO.PedidoDTO;
-import br.com.future_mob.service.CachingService;
+import br.com.future_mob.repository.PedidoRepository;
+import br.com.future_mob.repository.ProdutoRepository;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -14,10 +15,19 @@ import br.com.future_mob.service.CachingService;
 public class PedidoController {
 
 	@Autowired
-	private CachingService cacheService;
+	private PedidoRepository rep;
+	
+	@Autowired
+	private ProdutoRepository prodRep;
 	
 	@GetMapping(value = "/todos")
 	public List<PedidoDTO> retornarTodos() {
-		return cacheService.retornarPedidos();
+		List<PedidoDTO> pedidos = rep.retornarPedidos();
+		
+		for (PedidoDTO pedidoDTO : pedidos) {
+			pedidoDTO.setProdutosPorPedido(prodRep.retornarProdutosPorPedido(pedidoDTO.getIdPedido()));
+		}
+
+		return pedidos;
 	}
 }

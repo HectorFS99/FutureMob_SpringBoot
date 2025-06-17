@@ -81,7 +81,7 @@
                         <td>${linha.sexo}</td>
                         <td>${linha.telefoneCelular}</td>
                         <td>${linha.email}</td>
-                        <td>${linha.admin}</td>
+                        <td>${linha.admin ? 'Sim' : 'Não'}</td>
                         <td>
                             <div class="d-flex align-items-center justify-content-between">
                                 <a class="btn-tabela btn-excluir" onclick= "excluirUsuario(${linha.idUsuario})">
