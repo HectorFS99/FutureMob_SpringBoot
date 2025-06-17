@@ -77,7 +77,7 @@
                 <!-- Nome completo, CPF e RG -->
                 <div class="formulario-grupo">
                     <div class="form-floating">
-                        <input name="nomeCompleto" id="nomeCompleto" type="text" class="form-control" placeholder="Nome completo" onfocusout="validarNome('nomeCompleto', 'nomeCompleto_erro');" required>
+                        <input name="nomeCompleto" id="nomeCompleto" type="text" class="form-control" placeholder="Nome completo" value="<?= htmlspecialchars(isset($usuario['nomeCompleto']) ? $usuario['nomeCompleto'] : '') ?>" onfocusout="validarNome('nomeCompleto', 'nomeCompleto_erro');" required>
                         <label for="nomeCompleto">Nome completo:</label>
                         <div id="nomeCompleto_erro" class="invalid-feedback">
                         </div>
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     <div class="form-floating">
-                        <input name="rg" id="rg" type="text" class="form-control" placeholder="RG" maxlength="9" required>
+                        <input name="rg" id="rg" type="text" class="form-control" placeholder="RG" value="<?= htmlspecialchars(isset($usuario['rg']) ? $usuario['rg'] : '') ?>" maxlength="9" required>
                         <label for="rg">RG:</label>
                         <div id="rg_erro" class="invalid-feedback">
                         </div>                            
@@ -99,21 +99,21 @@
                 <!-- Data de nascimento, sexo e telefone celular -->
                 <div class="formulario-grupo">
                     <div class="form-floating">
-                        <input name="dataNascimento" id="dataNascimento" type="date" class="form-control" placeholder="Data de nascimento" onfocusout="validarDataNascimento('dataNascimento', 'dataNascimento_erro');" min="1900-01-01" required>
+                        <input name="dataNascimento" id="dataNascimento" type="date" class="form-control" placeholder="Data de nascimento" value="<?= htmlspecialchars(isset($usuario['dataNascimento']) ? $usuario['dataNascimento'] : '') ?>" onfocusout="validarDataNascimento('dataNascimento', 'dataNascimento_erro');" min="1900-01-01" required>
                         <label for="dataNascimento">Data de nascimento:</label>
                         <div id="dataNascimento_erro" class="invalid-feedback">
                         </div>
                     </div>
-                    <div class="form-floating">
-                        <select name="sexo" id="sexo" class="form-select" required>
-                            <option value =""></option>
-                            <option value="M">Masculino</option>
-                            <option value="F">Feminino</option>
-                        </select>
-                        <label for="sexo">Sexo:</label>
+                   <div class="form-floating">
+                    <select name="sexo" id="sexo" class="form-select" required>
+                    <option value="" <?= !isset($usuario['sexo']) || $usuario['sexo'] == '' ? 'selected' : '' ?>></option>
+                    <option value="M" <?= isset($usuario['sexo']) && $usuario['sexo'] == 'M' ? 'selected' : '' ?>>Masculino</option>
+                    <option value="F" <?= isset($usuario['sexo']) && $usuario['sexo'] == 'F' ? 'selected' : '' ?>>Feminino</option>
+                    </select>
+                    <label for="sexo">Sexo:</label>
                     </div>
                     <div class="form-floating">
-                        <input name="telefoneCelular" id="telefoneCelular" type="text" class="form-control" placeholder="Telefone celular" oninput="aplicarMascaraTelefone(this);" required>
+                        <input name="telefoneCelular" id="telefoneCelular" type="text" class="form-control" placeholder="Telefone celular" value="<?= htmlspecialchars(isset($usuario['telefoneCelular']) ? $usuario['telefoneCelular'] : '') ?>" oninput="aplicarMascaraTelefone(this);" required>
                         <label for="telefoneCelular">Telefone celular:</label>
                     </div>
                 </div>
@@ -122,13 +122,14 @@
                 <div class="formulario-grupo">
                     <div class="form-floating">
                         <select name="admin" id="admin" class="form-select" required>
-                            <option value="false">Não</option>
-                            <option value="true">Sim</option>
+                        <option value="" <?= !isset($usuario['admin']) || $usuario['admin'] == '' ? 'selected' : '' ?>></option>
+                        <option value="Não" <?= isset($usuario['admin']) && $usuario['admin'] == 'Não' ? 'selected' : '' ?>>Não</option>
+                        <option value="Sim" <?= isset($usuario['admin']) && $usuario['admin'] == 'Sim' ? 'selected' : '' ?>>Sim</option>
                         </select>
                         <label for="admin">Administrador?</label>
                     </div>  
                     <div class="form-floating">
-                        <input name="caminhoImgPerfil" id="caminhoImgPerfil" type="text" class="form-control" placeholder="Caminho da imagem de perfil">
+                        <input name="caminhoImgPerfil" id="caminhoImgPerfil" type="text" class="form-control" placeholder="Caminho da imagem de perfil" value="<?= htmlspecialchars(isset($usuario['caminhoImgPerfil']) ? $usuario['caminhoImgPerfil'] : '') ?>">
                         <label for="caminhoImgPerfil">Caminho da imagem de perfil:</label>
                     </div>
                 </div>
@@ -143,7 +144,7 @@
                     </div>
                     <div class="form-floating">
                         <div class="form-floating m-0">
-                            <input name="senha" id="senha" type="password" class="form-control" placeholder="Senha" onfocusout="validarCriteriosSenha('senha', 'senha_erro');" required>
+                            <input name="senha" id="senha" type="password" class="form-control" placeholder="Senha" value="<?= htmlspecialchars(isset($usuario['senha']) ? $usuario['senha'] : '') ?>" onfocusout="validarCriteriosSenha('senha', 'senha_erro');" required>
                             <label for="senha">Senha:</label>
                         </div>
                         <div id="senha_erro" class="invalid-feedback">
