@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import br.com.future_mob.model.Usuario;
-import br.com.future_mob.model.DTO.UsuarioDTO;
+import br.com.future_mob.projections.UsuarioProjection;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
     boolean existsByCpf(String cpf);
@@ -28,5 +28,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
             email = :email
             AND senha = :senha
         """, nativeQuery = true)
-    UsuarioDTO autenticar(String email, String senha);
+    UsuarioProjection autenticar(String email, String senha);
 }

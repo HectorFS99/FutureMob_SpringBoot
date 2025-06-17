@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import br.com.future_mob.projections.ProdutoProjection;
+
 public class PedidoDTO {
     private Integer id_pedido;
     private Date dt_pedido;
@@ -21,7 +23,7 @@ public class PedidoDTO {
     private String email;
     private String telefone_celular;
 
-    private List<ProdutoDTO> produtosPorPedido;
+    private List<ProdutoProjection> produtosPorPedido;
 
     public PedidoDTO() { }
 
@@ -178,11 +180,11 @@ public class PedidoDTO {
         this.telefone_celular = telefone_celular;
     }
 
-    public List<ProdutoDTO> getProdutosPorPedido() {
+    public List<ProdutoProjection> getProdutosPorPedido() {
         return produtosPorPedido;
     }
 
-    public void setProdutosPorPedido(List<ProdutoDTO> produtosPorPedido) {
+    public void setProdutosPorPedido(List<ProdutoProjection> produtosPorPedido) {
         this.produtosPorPedido = produtosPorPedido;
     }
 }

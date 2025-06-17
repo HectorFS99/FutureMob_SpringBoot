@@ -1,8 +1,8 @@
-package br.com.future_mob.model.DTO;
+package br.com.future_mob.projections;
 
 import java.time.LocalDate;
 
-public interface UsuarioDTO {
+public interface UsuarioProjection {
     Integer getIdUsuario();
     String getNomeCompleto();
     String getCpf();

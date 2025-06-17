@@ -1,9 +1,9 @@
-package br.com.future_mob.model.DTO;
+package br.com.future_mob.projections;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public interface ProdutoDTO {
+public interface ProdutoProjection {
     Integer getIdProduto();
     String getNome();
     String getDescricao();

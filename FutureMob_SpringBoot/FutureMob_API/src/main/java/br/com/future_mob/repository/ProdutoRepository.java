@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import br.com.future_mob.model.Produto;
-import br.com.future_mob.model.DTO.ProdutoDTO;
+import br.com.future_mob.projections.ProdutoProjection;
 
 public interface ProdutoRepository extends JpaRepository<Produto, Integer>{
     
@@ -27,5 +27,5 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer>{
         WHERE
             PP.id_pedido = :idPedido
         """, nativeQuery = true)
-    List<ProdutoDTO> retornarProdutosPorPedido(Integer idPedido);
+    List<ProdutoProjection> retornarProdutosPorPedido(Integer idPedido);
 }

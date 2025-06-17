@@ -12,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.future_mob.model.Usuario;
 import br.com.future_mob.model.DTO.AutenticacaoDTO;
-import br.com.future_mob.model.DTO.UsuarioDTO;
+import br.com.future_mob.projections.UsuarioProjection;
 import br.com.future_mob.repository.UsuarioRepository;
 
 @CrossOrigin(origins = "*")
@@ -30,7 +30,7 @@ public class UsuarioController {
 	@PostMapping(value = "/autenticar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<?> autenticar(@ModelAttribute AutenticacaoDTO dto) {
 		try {
-			UsuarioDTO usr = rep.autenticar(dto.getEmail(), dto.getSenha());
+			UsuarioProjection usr = rep.autenticar(dto.getEmail(), dto.getSenha());
 			if (usr == null) {
 				return ResponseEntity
 					.status(HttpStatus.NOT_FOUND)
