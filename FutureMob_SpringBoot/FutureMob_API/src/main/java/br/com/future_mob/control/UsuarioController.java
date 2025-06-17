@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import br.com.future_mob.model.Usuario;
+import br.com.future_mob.model.DTO.AutenticacaoDTO;
+import br.com.future_mob.model.DTO.UsuarioDTO;
 import br.com.future_mob.repository.UsuarioRepository;
 
 @CrossOrigin(origins = "*")
@@ -23,6 +25,18 @@ public class UsuarioController {
 	@GetMapping(value = "/todos") 
 	public List<Usuario> retornarTodos() {
 		return rep.findAll();
+	}
+	
+	@PostMapping(value = "/autenticar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<?> autenticar(@ModelAttribute AutenticacaoDTO dto) {
+		try {
+			UsuarioDTO usr = rep.autenticar(dto.getEmail(), dto.getSenha());
+			return ResponseEntity.ok(usr);
+		} catch (Exception ex) {
+			return ResponseEntity
+				.status(HttpStatus.BAD_REQUEST)
+				.body("Ocorreu um erro ao autenticar você: " + ex.getMessage());
+		}
 	}
 	
     @GetMapping("/{id}")

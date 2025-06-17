@@ -102,3 +102,38 @@ function adicionarRegistro(event, id_form, url, linkRedirecionamento = '/adm_ind
         }
     });
 }
+
+/* * * * * Autenticação * * * * */
+function autenticar(event) {
+    event.preventDefault();
+
+    const form = document.getElementById('formLogin');
+    const dadosFormulario = new FormData(form);
+
+    $.ajax({
+        url: 'http://localhost:8080/usuarios/autenticar',
+        method: 'POST',
+        data: dadosFormulario,
+        processData: false,
+        contentType: false,
+        success: function (retorno) {                    
+            sessionStorage.setItem('usuarioLogado', JSON.stringify(retorno));
+            notificar(true, "Acesso autorizado!", "Você será redirecionado(a) para a página principal.", 'success', 'adm_index.php');
+        },
+        error: function (retorno) {
+            console.error(retorno);
+
+            let mensagem = "Ocorreu um erro ao autenticar você.";
+            if (retorno.responseText) {
+                mensagem = retorno.responseText;
+            }
+
+            notificar(true, "Erro", mensagem, 'error', '');
+        }
+    });
+}
+
+function deslogar(nomeSessao) {
+    sessionStorage.removeItem(nomeSessao);
+    window.location.href = 'adm_login.php';
+}
