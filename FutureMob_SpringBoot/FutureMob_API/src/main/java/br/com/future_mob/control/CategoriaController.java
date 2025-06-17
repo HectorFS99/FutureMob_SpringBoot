@@ -18,27 +18,28 @@ import br.com.future_mob.service.CachingService;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/categorias")
-public class CategoriaController {	 
+public class CategoriaController {
 	@Autowired
 	private CategoriaRepository rep;
 
 	@Autowired
 	private CachingService cacheService;
-	
+
 	@GetMapping(value = "/todos")
 	public List<Categoria> retornarTodos() {
+		cacheService.removerCache();
 		return cacheService.retornarCategorias();
 	}
-	
+
 	@GetMapping(value = "/{id}")
 	public Categoria retornarPorID(@PathVariable Integer id) {
-		Optional<Categoria> op =  rep.findById(id);
-		
-		if(op.isPresent()) {
+		Optional<Categoria> op = rep.findById(id);
+
+		if (op.isPresent()) {
 			return op.get();
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		}		
+		}
 	}
 
 	@PostMapping(value = "/criar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -48,37 +49,37 @@ public class CategoriaController {
 			return ResponseEntity.ok(obj);
 		} catch (Exception ex) {
 			return ResponseEntity
-				.status(HttpStatus.BAD_REQUEST)
-				.body("Erro ao salvar o registro: " + ex.getMessage());
+					.status(HttpStatus.BAD_REQUEST)
+					.body("Erro ao salvar o registro: " + ex.getMessage());
 		}
 	}
-	
+
 	@PutMapping(value = "/atualizar/{id}")
-	public Categoria atualizar(@PathVariable Integer id, @RequestBody Categoria obj_atualizado) {	
+	public Categoria atualizar(@PathVariable Integer id, @RequestBody Categoria obj_atualizado) {
 		Optional<Categoria> op = rep.findById(id);
-		
-		if(op.isPresent()) {			
-			Categoria obj_atual = op.get();		
+
+		if (op.isPresent()) {
+			Categoria obj_atual = op.get();
 			obj_atual = obj_atualizado;
-			
-			rep.save(obj_atual);		
-			return obj_atual;			
+
+			rep.save(obj_atual);
+			return obj_atual;
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		}		
+		}
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public Categoria remover(@PathVariable Integer id) {	
+	public Categoria remover(@PathVariable Integer id) {
 		Optional<Categoria> op = rep.findById(id);
-		
-		if(op.isPresent()) {
+
+		if (op.isPresent()) {
 			Categoria obj = op.get();
 			rep.deleteById(id);
-			
+
 			return obj;
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		}		
+		}
 	}
 }
