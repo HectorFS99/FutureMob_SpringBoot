@@ -27,8 +27,8 @@ public class UsuarioController {
 		return rep.findAll();
 	}
 	
-	@PostMapping(value = "/autenticar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<?> autenticar(@ModelAttribute AutenticacaoDTO dto) {
+	@PostMapping(value = "/autenticar", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> autenticar(@RequestBody AutenticacaoDTO dto) {
 		try {
 			UsuarioProjection usr = rep.autenticar(dto.getEmail(), dto.getSenha());
 			if (usr == null) {
