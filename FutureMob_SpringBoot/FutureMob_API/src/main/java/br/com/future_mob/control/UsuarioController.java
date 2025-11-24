@@ -27,6 +27,7 @@ public class UsuarioController {
 		return rep.findAll();
 	}
 	
+	//Código para o login funcionar no app
 	@PostMapping(value = "/autenticar", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> autenticar(@RequestBody AutenticacaoDTO dto) {
 		try {
@@ -48,6 +49,30 @@ public class UsuarioController {
 				.body("Ocorreu um erro ao autenticar você: " + ex.getMessage());
 		}
 	}
+
+
+	// //Código para o login funcionar no site
+	// // @PostMapping(value = "/autenticar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	// // public ResponseEntity<?> autenticar(@ModelAttribute AutenticacaoDTO dto) {
+	// // 	try {
+	// // 		UsuarioProjection usr = rep.autenticar(dto.getEmail(), dto.getSenha());
+	// // 		if (usr == null) {
+	// // 			return ResponseEntity
+	// // 				.status(HttpStatus.NOT_FOUND)
+	// // 				.body("Usuário não encontrado.");
+	// // 		} else if (!usr.getAdmin()) {
+	// // 			return ResponseEntity
+	// // 				.status(HttpStatus.UNAUTHORIZED)
+	// // 				.body("Você não tem permissão para acessar o painel administrativo.");				
+	// // 		}
+			
+	// // 		return ResponseEntity.ok(usr);
+	// // 	} catch (Exception ex) {
+	// // 		return ResponseEntity
+	// // 			.status(HttpStatus.BAD_REQUEST)
+	// // 			.body("Ocorreu um erro ao autenticar você: " + ex.getMessage());
+	// // 	}
+	// // }
 	
     @GetMapping("/{id}")
 	public Usuario retornarPorID(@PathVariable Integer id) {
